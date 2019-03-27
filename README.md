@@ -6,11 +6,11 @@
 
   - https://github.com/opentabs/sidebar
   - https://github.com/opentabs/menu
+  - https://github.com/opentabs/photo-carousel
   - https://github.com/opentabs/reviews
   - https://github.com/opentabs/reservation-calendar
-  - https://github.com/opentabs/photos-carousel
-  
 
+  
 ## Table of Contents
 
 1. [Usage](#Usage)
