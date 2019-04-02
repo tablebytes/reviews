@@ -10,11 +10,12 @@ const path = require('path');
 const db = require('../database/index');
 
 // Test db connection
-// db.authenticate()
-//   .then(() => console.log('Connection successful'))
-//   .catch(err => console.log('Database connection error: ' + err));
+db.sql.authenticate()
+  .then(() => console.log('Database connected'))
+  .catch(err => console.log('Database connection error: ' + err));
 
 const app = express();
+
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -28,11 +29,18 @@ app.use(morgan('tiny'));
 //   connection.end();
 // });
 
-app.get('/', (req, res) => res.status(200).send('Welcome to the beginning of nothingness.'));
-// to see this, go to http://localhost:3000/
+// Gig routes
+app.use('/api/restaurants', require('./routes'));
+
+app.get('/api/users', (req, res) => {
+  db.getUsers()
+    .then(user => res.send(user));
+});
 
 const port = 3000;
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+module.exports = app;
