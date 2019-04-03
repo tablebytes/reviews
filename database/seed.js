@@ -15,7 +15,7 @@ const seedRestaurants = function seedRestaurants() {
 };
 
 const seedUsernames = function seedUsernames() {
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 400; i += 1) {
     const username = faker.internet.userName();
     const review_count = faker.random.number({
       min: 10,
@@ -33,14 +33,14 @@ const seedUsernames = function seedUsernames() {
 };
 
 const seedReviews = function seedReviews() {
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     const restaurant_id = faker.random.number({
       min: 1,
       max: 100,
     });
     const user_id = faker.random.number({
       min: 1,
-      max: 300,
+      max: 400,
     });
     const overall_score = faker.random.number({
       min: 1,
