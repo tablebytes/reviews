@@ -9,7 +9,7 @@ const exampleReviewData = [{
   ambience_score: 5,
   value_score: 4,
   date_dined: '2018-05-29 03:56:38',
-  review: 'quia ab et nemo doloremque aut',
+  review: 'this is the first review. the food was good, good, good!',
   user_recommended: 1,
 }, {
   id: 2,
@@ -21,7 +21,7 @@ const exampleReviewData = [{
   ambience_score: 3,
   value_score: 3,
   date_dined: '2019-02-29 09:56:38',
-  review: 'ab minima repellendus repudiandae et',
+  review: 'this is a second review. the food was okay. the service was meh.',
   user_recommended: 0,
 }];
 
