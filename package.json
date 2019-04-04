@@ -50,6 +50,7 @@
     "jest": "^24.5.0",
     "nodemon": "^1.18.10",
     "sequelize-cli": "^5.4.0",
+    "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
