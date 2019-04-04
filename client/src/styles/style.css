@@ -3,6 +3,22 @@
   display: grid;
   grid-template-columns: 100px 700px;
   /* grid-auto-rows: 100px; */
-  background-color: aqua;
-  font-size: '24px'
+  grid-template-columns: [col] 100px [col] 550px ;
+	grid-template-rows: [row] auto [row] auto [row] ;
+	background-color: #fff;
 }
+
+.scoreCell {
+  grid-column: col 2;
+  grid-row: row 1;
+  font-size: .875 rem;
+  font-weight: bold;
+  line-height: 1.43;
+}
+.reviewCell {
+  grid-column: col 2;
+  grid-row: row 2;
+  font-size: .875 rem;
+}
+
+

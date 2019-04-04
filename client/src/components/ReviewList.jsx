@@ -10,6 +10,7 @@ const ReviewList = ({ reviews }) => (
         overallScore={review.overall_score}
         foodScore={review.food_score}
         serviceScore={review.service_score}
+        ambienceScore={review.ambience_score}
         valueScore={review.value_score}
         dateDined={review.date_dined}
         review={review.review}

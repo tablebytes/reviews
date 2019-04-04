@@ -2,22 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/style.css';
 
-const ReviewEntry = ({ userId, review }) => {
-  // const styles = {
-  //   fontFamily: 'Helvetica',
-  //   fontSize: '12px',
-  //   border: '1px solid #d8d9db',
-  // };
-  const gridStyles = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gridGap: '10px',
-    gridAutoRows: 'minMax(100px, auto)',
-  };
-
+const ReviewEntry = ({ userId, overallScore, foodScore, serviceScore, ambienceScore, review }) => {
   return (
     <div className="review-container">
       <div className="cell userCell">{userId}</div>
+      <span className="cell scoreCell">
+        Overall {overallScore} Food {foodScore} Service {serviceScore} Ambience {ambienceScore}
+      </span>
       <div className="cell reviewCell">{review}</div>
     </div>
   );
