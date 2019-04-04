@@ -19,7 +19,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.reviews)
     return (
       <div>
         <ReviewList reviews={this.state.reviews} />
