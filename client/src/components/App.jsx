@@ -17,21 +17,6 @@ class App extends React.Component {
       reviews: exampleReviewData,
     });
   }
-  // componentDidMount() {
-  //   this.getReviews('react tutorials');
-  // }
-
-  // getReviews(query) {
-  //   const options = {
-  //     key: this.props.API_KEY,
-  //     query,
-  //   };
-
-  //   this.props.searchYouTube(options, videos => this.setState({
-  //     videos,
-  //     currentVideo: videos[0],
-  //   }));
-  // }
 
   render() {
     console.log(this.state.reviews)

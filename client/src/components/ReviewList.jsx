@@ -14,7 +14,6 @@ const ReviewList = ({ reviews }) => (
         valueScore={review.value_score}
         dateDined={review.date_dined}
         review={review.review}
-      // DID NOT BRING IN USER_RECOMMENDED HERE; USE IT TO CALC PERCENTAGE IN OTHER COMPONENT
       />
     ))}
   </div>

@@ -19,7 +19,4 @@ module.exports = {
       },
     ],
   },
-  // resolve: {
-  //   extension: ['.js', '.jsx'],
-  // },
 };
