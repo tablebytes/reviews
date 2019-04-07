@@ -13,11 +13,11 @@ const UserEntry = ({ userData }) => {
       <span className="user-initials">{initials}</span>
       <div className="user-name">{userData.username}</div>
       <div className="user-location">{userData.location}</div>
-      <div>
-        <span className="user-review-count">
-          <span className="user-review-bubble"><img src={speechbubble} alt="bubble" height="15" width="16" /></span>
+      <div className="user-review-count">
+        <p>
+          <img src={speechbubble} alt="bubble" height="10.5" width="11" />
           {`${userData.review_count} reviews`}
-        </span>
+        </p>
       </div>
     </div>
   );

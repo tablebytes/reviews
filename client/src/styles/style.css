@@ -117,7 +117,6 @@
 .user-review-count {
   grid-column: col 1;
   grid-row: row 5;
-  display: flex;
   flex-direction: row;
   font-family: 'Brandon-Bold';
   font-size: 12px;
@@ -126,11 +125,9 @@
   white-space: nowrap;
   color: rgb(111, 115, 123);
   flex: 0 0 auto;
-  display: flex;
   flex-direction: row;
+  text-align: center;
 }
-.user-review-bubble {
+.user-review-count img {
   margin-right: 0.25rem;
-  display: inline-block;
-  position: relative;
 }
