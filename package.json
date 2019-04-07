@@ -21,6 +21,7 @@
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "file-loader": "^3.0.1",
+    "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
@@ -30,6 +31,8 @@
     "radium-grid": "^2.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
     "sequelize": "^5.2.6",
     "style-loader": "^0.23.1"
   },

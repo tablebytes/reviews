@@ -6,7 +6,6 @@ const ReviewList = ({ reviews }) => (
     {reviews.map(review => (
       <ReviewEntry
         key={review.id}
-        userId={review.user_id}
         overallScore={review.overall_score}
         foodScore={review.food_score}
         serviceScore={review.service_score}
@@ -14,6 +13,7 @@ const ReviewList = ({ reviews }) => (
         valueScore={review.value_score}
         dateDined={review.date_dined}
         review={review.review}
+        userData={review.User}
       />
     ))}
   </div>

@@ -9,31 +9,30 @@ const seedRestaurants = function seedRestaurants() {
     const restaurant_name = faker.lorem.word();
     Models.Restaurant.create({ restaurant_name })
       .then(() => {
-        console.log('row added to restaurants table');
       });
   }
 };
 
 const seedUsernames = function seedUsernames() {
   for (let i = 0; i < 400; i += 1) {
-    const username = faker.internet.userName();
+    const username = faker.name.firstName();
     const review_count = faker.random.number({
       min: 10,
       max: 40,
     });
-    const location = faker.address.city().concat(', ', faker.address.stateAbbr());
+    const location = 'San Francisco';
+    // const location = faker.address.city().concat(', ', faker.address.stateAbbr());
     const vip = faker.random.boolean();
     Models.User.create({
       username, review_count, location, VIP: vip,
     })
       .then(() => {
-        console.log('row added to users table');
       });
   }
 };
 
 const seedReviews = function seedReviews() {
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 1000; i += 1) {
     const restaurant_id = faker.random.number({
       min: 1,
       max: 100,
@@ -78,7 +77,6 @@ const seedReviews = function seedReviews() {
       user_recommended,
     })
       .then(() => {
-        console.log('row added to reviews table');
       });
   }
 };

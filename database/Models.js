@@ -66,16 +66,15 @@ const Review = db.sql.define('Review', {
   timestamps: false,
 });
 
-// User.hasMany(Review);
-// Review.belongsTo(Restaurant);
-// Restaurant.hasMany(Review);
-// Review.belongsTo(User);
+User.hasMany(Review, { foreignKey: 'user_id' });
+Review.belongsTo(User, { foreignKey: 'user_id' });
+Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
+Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
 
 db.sql.sync();
 
-const getUsers = () => User.findAll({});
-
-module.exports.Restaurant = Restaurant;
-module.exports.User = User;
-module.exports.Review = Review;
-module.exports.getUsers = getUsers;
+module.exports = {
+  Restaurant,
+  User,
+  Review,
+};

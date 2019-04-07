@@ -1,21 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/style.css';
+import moment from 'moment';
 import redstar from '../redstar.png';
 import graystar from '../graystar.png';
-import UserEntry from './UserEntry.jsx'
+import UserEntry from './UserEntry.jsx';
 
-const ReviewEntry = ({ userId, overallScore, foodScore, serviceScore, ambienceScore, review }) => {
+
+const ReviewEntry = ({
+  userData, overallScore, foodScore, serviceScore, ambienceScore, dateDined, review 
+}) => {
+  const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>;
+  const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
+  let starCounts = [red, red, red, red, red];
+  if (overallScore === 4) {
+    starCounts = [red, red, red, red, gray];
+  } else if (overallScore === 3) {
+    starCounts = [red, red, red, gray, gray];
+  } else if (overallScore === 2) {
+    starCounts = [red, red, gray, gray, gray];
+  } else if (overallScore === 1) {
+    starCounts = [red, gray, gray, gray, gray];
+  }
   return (
     <div className="reviews-container">
-      <div className="reviews-user-cell">{userId}</div>
+      <div className="reviews-user-cell">
+        <UserEntry userData={userData} />
+      </div>
       <div>
-        <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>
-        <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>
-        <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>
-        <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>
-        <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>
-        <span className="reviews-review-date">January 10, 2019</span>
+        {starCounts}
+        <span className="reviews-review-date">{`Dined on ${moment(dateDined).format('MMMM DD, YYYY')}`}</span>
       </div>
       <div className="reviews-score-cell">
         <span className="reviews-score-category">Overall</span>
@@ -32,8 +46,8 @@ const ReviewEntry = ({ userId, overallScore, foodScore, serviceScore, ambienceSc
   );
 };
 
-// ReviewEntry.propTypes = {
-//   reviews: PropTypes.arrayOf.isRequired,
-// };
-
 export default ReviewEntry;
+
+// ReviewEntry.propTypes = {
+//   userId: PropTypes.array.isRequired,
+// };
