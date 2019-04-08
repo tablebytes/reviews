@@ -1,12 +1,9 @@
 import React from 'react';
-import '../styles/style.css';
+import '../styles/reviewStyle.css';
 import speechbubble from '../speechbubble.png';
 
-
 const UserEntry = ({ userData }) => {
-  console.log(userData);
   const initials = userData.username.substring(0, 2);
-
   return (
     <div>
       {userData.VIP ? <span className="vip-label">VIP</span> : null}

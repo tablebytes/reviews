@@ -1,7 +1,7 @@
 .reviews-container {
   display: grid;
-  grid-template-columns: [col] 152px  [col] 440px ;
-  grid-template-rows: [row] 20px [row] 20px [row] auto [row] 20px;
+  grid-template-columns: [col] 160px  [col] 440px ;
+  grid-template-rows: [row] 25px [row] 25px [row] auto [row] 25px;
   background-color: #fff;
   font-family: 'Brandon', 'Tahoma', 'Verdana';
   font-size: .875 rem;
@@ -12,6 +12,7 @@
 }
 .reviews-user-cell {
   grid-column: col 1;
+  grid-row: row 1 / span 5;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -38,7 +39,7 @@
 .reviews-score-cell {
   grid-column: col 2;
   grid-row: row 2;
-  font-family: 'Brandon-Bold';
+  font-family: 'Brandon-Bold', 'Tahoma', 'Verdana';
   margin-top: 0.5rem;
 }
 .reviews-score-category {
@@ -97,11 +98,12 @@
 .user-name {
   grid-column: col 1;
   grid-row: row 3;
+  font-family: 'Brandon-Medium', 'Tahoma', 'Verdana';
   font-weight: 500;
   font-size: 0.875rem;
   text-align: center;
   margin-bottom: 0.25rem;
-  color: rgb(45, 51, 63);
+  color: #2d333f;
   word-break: break-word;
 }
 .user-location {
@@ -118,7 +120,7 @@
   grid-column: col 1;
   grid-row: row 5;
   flex-direction: row;
-  font-family: 'Brandon-Bold';
+  font-family: 'Brandon-Bold', 'Tahoma', 'Verdana';
   font-size: 12px;
   font-weight: bold;
   line-height: 1.43;

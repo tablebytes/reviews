@@ -1,0 +1,13 @@
+.bar {
+  width: 290px;
+  height: 20px;
+  background-color: #da3743;
+  float: left;
+  width: 70%;
+  margin-top: 10px;
+}
+.chart-score-label {
+  float: left;
+  width: 15%;
+  margin-top: 10px;
+}

@@ -3,8 +3,8 @@ import {
   BrowserRouter,
   Route,
 } from 'react-router-dom';
-import exampleReviewData from '../exampleReviewData.js';
 import ReviewList from './ReviewList.jsx'
+import RatingSummary from './RatingSummary.jsx'
 
 class App extends React.Component {
   constructor() {
@@ -31,7 +31,6 @@ class App extends React.Component {
           restaurantId: 2,
           reviews: data,
         });
-        console.log('hiya');
       })
       .catch(err => console.error(err));
   }
@@ -41,6 +40,7 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Route path="/api/restaurants/:id/reviews" component={ReviewList} />
+          <RatingSummary reviews={this.state.reviews} />
           <ReviewList reviews={this.state.reviews} />
         </div>
       </BrowserRouter>

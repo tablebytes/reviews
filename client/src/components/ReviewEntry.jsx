@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import '../styles/style.css';
+import '../styles/reviewStyle.css';
 import moment from 'moment';
 import redstar from '../redstar.png';
 import graystar from '../graystar.png';
