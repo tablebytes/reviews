@@ -3,10 +3,14 @@ import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
 import redstar from '../redstar.png';
 import graystar from '../graystar.png';
+import noisebar from '../noisebar.png';
+import thumbsup from '../thumbsup.png';
 
 const RatingSummary = (props) => {
   const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
   const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
+  const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
+  const thumb = <span className="reviews-icon"><img src={thumbsup} alt="thumb icon" height="16" width="auto" /></span>;
 
   return (
     <div className="reviews-summary">
@@ -41,6 +45,24 @@ const RatingSummary = (props) => {
           <div className="reviews-summary-score">
             <div className="reviews-summary-category-score">4.2</div>
             <div className="reviews-summary-category-text">Value</div>
+          </div>
+        </div>
+      </div>
+      <div className="noise-thumb-outer">
+        <div className="noise-thumb-inner">
+          <div>{noise}</div>
+          <div className="noise-thumb-text-line">
+            <span className="noise-thumb-emphasized">Noise · </span>
+            <span>Moderate</span>
+          </div>
+        </div>
+      </div>
+      <div className="noise-thumb-outer">
+        <div className="noise-thumb-inner">
+          <div>{thumb}</div>
+          <div className="noise-thumb-text-line">
+            <span className="noise-thumb-emphasized">85% of people </span>
+            <span>would recommend it to a friend</span>
           </div>
         </div>
       </div>

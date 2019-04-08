@@ -9,6 +9,8 @@
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-bottom: solid 1px #d8d9db;
+  margin-left: 1rem;
+
 }
 .reviews-user-cell {
   grid-column: col 1;
