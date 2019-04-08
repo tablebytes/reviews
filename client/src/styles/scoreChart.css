@@ -4,13 +4,21 @@
   width: 16rem;
 }
 .chart-label {
-  width: 8%;
+  width: 10%;
   margin-top: 2px;
+  text-align: center;
 }
 .chart-label span {
   margin-right: 0.5rem;
   width: 1rem;
   text-align: center;
+}
+.chart-row:hover .chart-label span{
+  /* border-bottom: 2px solid black; */
+  text-decoration: underline;
+}
+.chart-row:hover .bar-container{
+  border: 2px solid  #da3743;
 }
 .chart-row {
   display: flex;
@@ -26,6 +34,9 @@
   overflow: hidden;
   margin-top: -1px;
   margin-bottom: -2px;
+}
+.bar-container:hover {
+  border: 2px solid  #da3743;
 }
 .bar-5 {width: 85%; height: 100%; background: #da3743; display: block}
 .bar-4 {width: 30%; height: 100%; background: #da3743; display: block}

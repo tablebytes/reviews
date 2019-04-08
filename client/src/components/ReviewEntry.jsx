@@ -28,7 +28,7 @@ const ReviewEntry = ({
         <UserEntry userData={userData} />
       </div>
       <div>
-        {starCounts}
+        <span>{starCounts}</span>
         <span className="reviews-review-date">{`Dined on ${moment(dateDined).format('MMMM DD, YYYY')}`}</span>
       </div>
       <div className="reviews-score-cell">

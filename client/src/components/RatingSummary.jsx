@@ -5,6 +5,9 @@ import redstar from '../redstar.png';
 import graystar from '../graystar.png';
 
 const RatingSummary = (props) => {
+  const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
+  const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
+
   return (
     <div className="reviews-summary">
       <span className="reviews-summary-heading">What 131 People Are Saying</span>
@@ -14,7 +17,9 @@ const RatingSummary = (props) => {
           Reviews can only be made by diners who have eaten at this restaurant
         </span>
         <div className="reviews-summary-stars-section">
-          <div className="reviews-summary-stars">*  *  *  *  *</div>
+          <div className="reviews-summary-stars">
+            <span>{[red, red, red, red, gray]}</span>
+          </div>
           <div className="reviews-summary-stars-text">
             <span>4.6</span>
             <span>based on recent ratings</span>
