@@ -1,13 +1,34 @@
-.bar {
-  width: 290px;
-  height: 20px;
-  background-color: #da3743;
-  float: left;
-  width: 70%;
-  margin-top: 10px;
+.chart {
+  display: block;
+  margin: 0;
+  width: 16rem;
 }
-.chart-score-label {
-  float: left;
-  width: 15%;
-  margin-top: 10px;
+.chart-label {
+  width: 8%;
+  margin-top: 2px;
 }
+.chart-label span {
+  margin-right: 0.5rem;
+  width: 1rem;
+  text-align: center;
+}
+.chart-row {
+  display: flex;
+  padding-bottom: 0.5rem;
+  align-items: center;
+}
+.bar-container {
+  display: block;
+  flex: auto;
+  height: 1rem;
+  border: 1px solid #d8d9db;
+  box-sizing: border-box;
+  overflow: hidden;
+  margin-top: -1px;
+  margin-bottom: -2px;
+}
+.bar-5 {width: 85%; height: 100%; background: #da3743; display: block}
+.bar-4 {width: 30%; height: 100%; background: #da3743; display: block}
+.bar-3 {width: 10%; height: 100%; background: #da3743; display: block}
+.bar-2 {width: 4%; height: 100%; background: #da3743; display: block}
+.bar-1 {width: 15%; height: 100%; background: #da3743; display: block}

@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
+import redstar from '../redstar.png';
+import graystar from '../graystar.png';
 
 const RatingSummary = (props) => {
   return (
