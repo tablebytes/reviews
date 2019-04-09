@@ -12,13 +12,11 @@ xdescribe('Hello world test', () => {
 });
 
 xdescribe('Database Test', () => {
-  let items;
-  test('it contains a reviews table', done => ({
+  test('it contains a reviews table', (done) => {
     Models.Review.find()
-      .then(results => {
-        items = results;
+      .then((results) => {
         expect(results).toBeTruthy();
         done();
-      })
-  }));
+      });
+  });
 });
