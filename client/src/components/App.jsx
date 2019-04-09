@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      restaurantId: 4,
+      restaurantId: 1,
       reviews: [],
       origReviews: [],
       reviewsFiltered: false,
@@ -19,17 +19,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getReviews();
+    const splitUrl = window.location.pathname.split('/');
+    const rId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
+    this.setState({
+      restaurantId: rId,
+    }, this.getReviews);
   }
 
   getReviews() {
-    const searchId = window.location;
-    console.log(searchId);
-    fetch(`http://127.0.0.1:3000/api/restaurants/${this.state.restaurantId}/reviews`)
+    fetch(`/api/restaurants/${this.state.restaurantId}/reviews`)
       .then(response => response.json())
       .then((data) => {
         this.setState({
-          restaurantId: 4,
           reviews: data,
           origReviews: data,
         });

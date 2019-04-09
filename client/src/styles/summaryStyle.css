@@ -1,6 +1,6 @@
 .reviews-summary {
   display: grid;
-  grid-template-columns: [col] 300px  [col] 320px ;
+  grid-template-columns: [col] 290px  [col] 320px ;
   grid-template-rows: [row] 80px [row] auto [row] auto [row] auto;
   background-color: #fff;
   font-family: 'Brandon', 'Tahoma', 'Verdana';

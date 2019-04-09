@@ -3,8 +3,8 @@ const Sequelize = require('sequelize');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
-const mysql = require('mysql');
 const path = require('path');
+const Models = require('../database/Models');
 
 const db = require('../database/index');
 
@@ -15,16 +15,22 @@ db.sql.authenticate()
 const port = 3000;
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/../client/dist')));
+app.use('/restaurants/:id', express.static(path.join(__dirname, '/../client/dist')));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cors());
 app.use(morgan('tiny'));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/../client/dist'));
+app.get('/api/restaurants/:id/reviews', (req, res) => {
+  const { id } = req.params;
+  Models.Review.findAll({ where: { restaurant_id: id }, include: [Models.User] })
+    .then((data) => {
+      res.send(data);
+      res.sendStatus(200);
+    })
+    .catch(err => console.log(err));
 });
-app.use('/api/restaurants', require('./routes'));
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);

@@ -24,6 +24,32 @@ const RatingSummary = (props) => {
   const avgService = Math.round((sumService / reviewCount) * 10) / 10;
   const avgAmbience = Math.round((sumAmbience / reviewCount) * 10) / 10;
   const avgValue = Math.round((sumValue / reviewCount) * 10) / 10;
+  const styles = {
+    redStars: {
+      height: '16px',
+      maxWidth: (avgOverall * 16 + Math.floor(avgOverall) * 4.8) + 'px',
+      overflow: 'hidden',
+      display: 'inline',
+      zIndex: 1,
+      position: 'absolute',
+      whiteSpace: 'nowrap',
+      paddingBottom: '30px',
+    },
+    star: {
+      width: '16px',
+      height: '16px',
+      display: 'inline',
+      overflow: 'hidden',
+      marginRight: '.24rem',
+    },
+    greyStars: {
+      height: '16px',
+      maxWidth: (5 * 20.8) + 'px',
+      overflow: 'hidden',
+      display: 'inline',
+      paddingBottom: '30px',
+    },
+  };
 
   return (
     <div className="reviews-summary">
@@ -37,7 +63,21 @@ const RatingSummary = (props) => {
         </span>
         <div className="reviews-summary-stars-section">
           <div className="reviews-summary-stars">
-            <span>{[red, red, red, red, gray]}</span>
+            {/* <span>{[red, red, red, red, gray]}</span> */}
+            <div style={styles.redStars}>
+              <img src={redstar} style={styles.star}></img>
+              <img src={redstar} style={styles.star}></img>
+              <img src={redstar} style={styles.star}></img>
+              <img src={redstar} style={styles.star}></img>
+              <img src={redstar} style={styles.star}></img>
+            </div>
+            <div style={styles.greyStars}>
+              <img src={graystar} style={styles.star}></img>
+              <img src={graystar} style={styles.star}></img>
+              <img src={graystar} style={styles.star}></img>
+              <img src={graystar} style={styles.star}></img>
+              <img src={graystar} style={styles.star}></img>
+            </div>
           </div>
           <div className="reviews-summary-stars-text">
             <span>{avgOverall}</span>

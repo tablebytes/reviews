@@ -32,14 +32,14 @@ const seedUsernames = function seedUsernames() {
 };
 
 const seedReviews = function seedReviews() {
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 300; i += 1) {
     const restaurant_id = faker.random.number({
       min: 1,
       max: 100,
     });
     const user_id = faker.random.number({
       min: 1,
-      max: 400,
+      max: 100,
     });
     const overall_score = faker.random.number({
       min: 1,
@@ -62,7 +62,57 @@ const seedReviews = function seedReviews() {
       max: 5,
     });
     const date_dined = faker.date.between('2015-01-01', '2019-03-31');
-    const review = faker.lorem.words();
+    const review = faker.lorem.sentence();
+    const user_recommended = faker.random.boolean();
+    Models.Review.create({
+      restaurant_id,
+      user_id,
+      overall_score,
+      food_score,
+      service_score,
+      ambience_score,
+      value_score,
+      date_dined,
+      review,
+      user_recommended,
+    })
+      .then(() => {
+      });
+  }
+};
+
+const seedReviewsHigher = function seedReviewsHigher() {
+  for (let i = 0; i < 1000; i += 1) {
+    const restaurant_id = faker.random.number({
+      min: 1,
+      max: 100,
+    });
+    const user_id = faker.random.number({
+      min: 101,
+      max: 400,
+    });
+    const overall_score = faker.random.number({
+      min: 3,
+      max: 5,
+    });
+    const food_score = faker.random.number({
+      min: 3,
+      max: 5,
+    });
+    const service_score = faker.random.number({
+      min: 3,
+      max: 5,
+    });
+    const ambience_score = faker.random.number({
+      min: 3,
+      max: 5,
+    });
+    const value_score = faker.random.number({
+      min: 3,
+      max: 5,
+    });
+    const date_dined = faker.date.between('2015-01-01', '2019-03-31');
+    const review = faker.lorem.sentences();
     const user_recommended = faker.random.boolean();
     Models.Review.create({
       restaurant_id,
@@ -85,6 +135,7 @@ database.sql.sync({ force: true }).then(function() {
   seedRestaurants();
   seedUsernames();
   seedReviews();
+  seedReviewsHigher();
 });
 
 database.connection.end();
