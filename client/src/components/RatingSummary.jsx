@@ -12,11 +12,23 @@ const RatingSummary = (props) => {
   const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
   const thumb = <span className="reviews-icon"><img src={thumbsup} alt="thumb icon" height="16" width="auto" /></span>;
+  const reviewCount = origReviews.length;
+
+  const sumOverall = origReviews.reduce(((prev, curr) => prev + curr.overall_score), 0);
+  const sumFood = origReviews.reduce(((prev, curr) => prev + curr.food_score), 0);
+  const sumService = origReviews.reduce(((prev, curr) => prev + curr.service_score), 0);
+  const sumAmbience = origReviews.reduce(((prev, curr) => prev + curr.ambience_score), 0);
+  const sumValue = origReviews.reduce(((prev, curr) => prev + curr.value_score), 0);
+  const avgOverall = Math.round((sumOverall / reviewCount) * 10) / 10;
+  const avgFood = Math.round((sumFood / reviewCount) * 10) / 10;
+  const avgService = Math.round((sumService / reviewCount) * 10) / 10;
+  const avgAmbience = Math.round((sumAmbience / reviewCount) * 10) / 10;
+  const avgValue = Math.round((sumValue / reviewCount) * 10) / 10;
 
   return (
     <div className="reviews-summary">
       <span className="reviews-summary-heading">
-        {`What ${origReviews.length} People Are Saying`}
+        {`What ${reviewCount} People Are Saying`}
       </span>
       <div>
         <span className="reviews-summary-heading-2">Overall ratings and reviews</span>
@@ -28,25 +40,25 @@ const RatingSummary = (props) => {
             <span>{[red, red, red, red, gray]}</span>
           </div>
           <div className="reviews-summary-stars-text">
-            <span>4.0</span>
+            <span>{avgOverall}</span>
             <span>based on recent ratings</span>
           </div>
         </div>
         <div className="reviews-summary-scores-section">
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.3</div>
+            <div className="reviews-summary-category-score">{avgFood}</div>
             <div className="reviews-summary-category-text">Food</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.1</div>
+            <div className="reviews-summary-category-score">{avgService}</div>
             <div className="reviews-summary-category-text">Service</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">3.7</div>
+            <div className="reviews-summary-category-score">{avgAmbience}</div>
             <div className="reviews-summary-category-text">Ambience</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.0</div>
+            <div className="reviews-summary-category-score">{avgValue}</div>
             <div className="reviews-summary-category-text">Value</div>
           </div>
         </div>
