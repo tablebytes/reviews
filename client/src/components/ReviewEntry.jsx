@@ -29,7 +29,7 @@ const ReviewEntry = ({
       </div>
       <div>
         <span>{starCounts}</span>
-        <span className="reviews-review-date">{`Dined on ${moment(dateDined).format('MMMM DD, YYYY')}`}</span>
+        <span className="reviews-review-date">{`Dined on ${moment(dateDined).format('MMMM D, YYYY')}`}</span>
       </div>
       <div className="reviews-score-cell">
         <span className="reviews-score-category">Overall</span>
