@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
-import redstar from '../redstar.png';
-import graystar from '../graystar.png';
-import noisebar from '../noisebar.png';
-import thumbsup from '../thumbsup.png';
+import redstar from '../images/redstar.png';
+import graystar from '../images/graystar.png';
+import noisebar from '../images/noisebar.png';
+import thumbsup from '../images/thumbsup.png';
 
 const RatingSummary = (props) => {
   const { reviews, origReviews, handleChartClick } = props;
@@ -63,7 +63,6 @@ const RatingSummary = (props) => {
         </span>
         <div className="reviews-summary-stars-section">
           <div className="reviews-summary-stars">
-            {/* <span>{[red, red, red, red, gray]}</span> */}
             <div style={styles.redStars}>
               <img src={redstar} style={styles.star}></img>
               <img src={redstar} style={styles.star}></img>

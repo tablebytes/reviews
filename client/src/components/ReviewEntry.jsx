@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/reviewStyle.css';
 import moment from 'moment';
-import redstar from '../redstar.png';
-import graystar from '../graystar.png';
+import redstar from '../images/redstar.png';
+import graystar from '../images/graystar.png';
 import UserEntry from './UserEntry.jsx';
 
 
@@ -47,7 +47,3 @@ const ReviewEntry = ({
 };
 
 export default ReviewEntry;
-
-// ReviewEntry.propTypes = {
-//   userId: PropTypes.array.isRequired,
-// };

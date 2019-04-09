@@ -35,7 +35,7 @@ class App extends React.Component {
           origReviews: data,
         });
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error('Error fetching data: ' + err));
   }
 
   handleChartClick(e, clickScore) {
