@@ -10,8 +10,9 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      restaurantId: 4,
+      restaurantId: 9,
       reviews: [],
+      origReviews: [],
     };
   }
 
@@ -26,11 +27,22 @@ class App extends React.Component {
       .then(response => response.json())
       .then((data) => {
         this.setState({
-          restaurantId: 2,
+          restaurantId: 9,
           reviews: data,
+          origReviews: data,
         });
       })
       .catch(err => console.error(err));
+  }
+
+  handleChartClick(e, clickScore) {
+    console.log(clickScore);
+    e.preventDefault();
+    this.setState({
+      reviews: this.state.origReviews.filter((rev) => {
+        return rev.overall_score === clickScore;
+      }),
+    });
   }
 
   render() {
@@ -38,7 +50,10 @@ class App extends React.Component {
       <BrowserRouter>
         <div>
           <Route path="/api/restaurants/:id/reviews" component={ReviewList} />
-          <RatingSummary reviews={this.state.reviews} />
+          <RatingSummary
+            reviews={this.state.reviews} 
+            handleChartClick={this.handleChartClick.bind(this)} 
+          />
           <ReviewList reviews={this.state.reviews} />
         </div>
       </BrowserRouter>

@@ -7,7 +7,7 @@ import noisebar from '../noisebar.png';
 import thumbsup from '../thumbsup.png';
 
 const RatingSummary = (props) => {
-  const { reviews } = props;
+  const { reviews, handleChartClick } = props;
   const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
   const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
@@ -28,25 +28,25 @@ const RatingSummary = (props) => {
             <span>{[red, red, red, red, gray]}</span>
           </div>
           <div className="reviews-summary-stars-text">
-            <span>4.6</span>
+            <span>4.0</span>
             <span>based on recent ratings</span>
           </div>
         </div>
         <div className="reviews-summary-scores-section">
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.7</div>
+            <div className="reviews-summary-category-score">4.3</div>
             <div className="reviews-summary-category-text">Food</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.5</div>
+            <div className="reviews-summary-category-score">4.1</div>
             <div className="reviews-summary-category-text">Service</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.3</div>
+            <div className="reviews-summary-category-score">3.7</div>
             <div className="reviews-summary-category-text">Ambience</div>
           </div>
           <div className="reviews-summary-score">
-            <div className="reviews-summary-category-score">4.2</div>
+            <div className="reviews-summary-category-score">4.0</div>
             <div className="reviews-summary-category-text">Value</div>
           </div>
         </div>
@@ -70,7 +70,10 @@ const RatingSummary = (props) => {
         </div>
       </div>
       <div className="reviews-summary-chart">
-        <ScoreChart scores={props} />
+        <ScoreChart
+          scores={props}
+          handleChartClick={handleChartClick}
+        />
       </div>
     </div>
   );
