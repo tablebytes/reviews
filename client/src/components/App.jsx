@@ -23,8 +23,6 @@ class App extends React.Component {
     const searchId = window.location;
     console.log(searchId);
     fetch(`http://127.0.0.1:3000/api/restaurants/${this.state.restaurantId}/reviews`)
-    // fetch(`http://localhost:3000/api/restaurants/4/reviews`)
-    // fetch(`/api/restaurants/searchId`)
       .then(response => response.json())
       .then((data) => {
         this.setState({

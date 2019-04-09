@@ -38,8 +38,8 @@
 .bar-container:hover {
   border: 2px solid  #da3743;
 }
-.bar-5 {width: 85%; height: 100%; background: #da3743; display: block}
-.bar-4 {width: 30%; height: 100%; background: #da3743; display: block}
+.bar-5 {width: 65%; height: 100%; background: #da3743; display: block}
+.bar-4 {width: 15%; height: 100%; background: #da3743; display: block}
 .bar-3 {width: 10%; height: 100%; background: #da3743; display: block}
-.bar-2 {width: 4%; height: 100%; background: #da3743; display: block}
-.bar-1 {width: 15%; height: 100%; background: #da3743; display: block}
+.bar-2 {width: 5%; height: 100%; background: #da3743; display: block}
+.bar-1 {width: 5%; height: 100%; background: #da3743; display: block}
