@@ -7,7 +7,7 @@ import noisebar from '../noisebar.png';
 import thumbsup from '../thumbsup.png';
 
 const RatingSummary = (props) => {
-  const { reviews, handleChartClick } = props;
+  const { reviews, origReviews, handleChartClick } = props;
   const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
   const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
@@ -16,7 +16,7 @@ const RatingSummary = (props) => {
   return (
     <div className="reviews-summary">
       <span className="reviews-summary-heading">
-        {`What ${reviews.length} People Are Saying`}
+        {`What ${origReviews.length} People Are Saying`}
       </span>
       <div>
         <span className="reviews-summary-heading-2">Overall ratings and reviews</span>
@@ -71,7 +71,8 @@ const RatingSummary = (props) => {
       </div>
       <div className="reviews-summary-chart">
         <ScoreChart
-          scores={props}
+          scores={reviews}
+          origReviews={origReviews}
           handleChartClick={handleChartClick}
         />
       </div>

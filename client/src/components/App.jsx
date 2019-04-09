@@ -10,9 +10,11 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      restaurantId: 9,
+      restaurantId: 4,
       reviews: [],
       origReviews: [],
+      reviewsFiltered: false,
+      filterScore: '',
     };
   }
 
@@ -27,7 +29,7 @@ class App extends React.Component {
       .then(response => response.json())
       .then((data) => {
         this.setState({
-          restaurantId: 9,
+          restaurantId: 4,
           reviews: data,
           origReviews: data,
         });
@@ -36,13 +38,30 @@ class App extends React.Component {
   }
 
   handleChartClick(e, clickScore) {
-    console.log(clickScore);
     e.preventDefault();
-    this.setState({
-      reviews: this.state.origReviews.filter((rev) => {
-        return rev.overall_score === clickScore;
-      }),
-    });
+    if (this.state.reviewsFiltered) {
+      if (clickScore === this.state.filterScore) {
+        this.setState({
+          reviews: this.state.origReviews,
+          reviewsFiltered: false,
+        });
+      } else {
+        this.setState({
+          reviews: this.state.origReviews.filter((rev) => {
+            return rev.overall_score === clickScore;
+          }),
+          filterScore: clickScore,
+        });
+      }
+    } else {
+      this.setState({
+        reviews: this.state.origReviews.filter((rev) => {
+          return rev.overall_score === clickScore;
+        }),
+        reviewsFiltered: true,
+        filterScore: clickScore,
+      });
+    }
   }
 
   render() {
@@ -52,6 +71,7 @@ class App extends React.Component {
           <Route path="/api/restaurants/:id/reviews" component={ReviewList} />
           <RatingSummary
             reviews={this.state.reviews} 
+            origReviews={this.state.origReviews}
             handleChartClick={this.handleChartClick.bind(this)} 
           />
           <ReviewList reviews={this.state.reviews} />
