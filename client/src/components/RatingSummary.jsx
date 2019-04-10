@@ -8,8 +8,6 @@ import thumbsup from '../images/thumbsup.png';
 
 const RatingSummary = (props) => {
   const { reviews, origReviews, handleChartClick } = props;
-  const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
-  const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
   const thumb = <span className="reviews-icon"><img src={thumbsup} alt="thumb icon" height="16" width="auto" /></span>;
   const reviewCount = origReviews.length;
