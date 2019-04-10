@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/reviewStyle.css';
-import speechbubble from '../images/speechbubble.png';
+import speechbubble from '../../dist/images/speechbubble.png';
 
 const UserEntry = ({ userData }) => {
   const initials = userData.username.substring(0, 2);

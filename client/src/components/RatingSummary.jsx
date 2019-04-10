@@ -1,10 +1,10 @@
 import React from 'react';
 import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
-import redstar from '../images/redstar.png';
-import graystar from '../images/graystar.png';
-import noisebar from '../images/noisebar.png';
-import thumbsup from '../images/thumbsup.png';
+import redstar from '../../dist/images/redstar.png';
+import graystar from '../../dist/images/graystar.png';
+import noisebar from '../../dist/images/noisebar.png';
+import thumbsup from '../../dist/images/thumbsup.png';
 
 const RatingSummary = (props) => {
   const { reviews, origReviews, handleChartClick } = props;

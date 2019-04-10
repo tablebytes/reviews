@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/reviewStyle.css';
 import moment from 'moment';
-import redstar from '../images/redstar.png';
-import graystar from '../images/graystar.png';
+import redstar from '../../dist/images/redstar.png';
+import graystar from '../../dist/images/graystar.png';
 import UserEntry from './UserEntry.jsx';
 
 
