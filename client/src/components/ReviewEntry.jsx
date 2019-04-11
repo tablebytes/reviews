@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/reviewStyle.css';
 import moment from 'moment';
-import redstar from '../../dist/images/redstar.png';
-import graystar from '../../dist/images/graystar.png';
 import UserEntry from './UserEntry.jsx';
-
 
 const ReviewEntry = ({
   userData, overallScore, foodScore, serviceScore, ambienceScore, dateDined, review 
 }) => {
+  const redstar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/redstar.png';
+  const graystar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/graystar.png';
   const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="auto" /></span>;
   const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   let starCounts = [red, red, red, red, red];

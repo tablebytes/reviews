@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
-import redstar from '../../dist/images/redstar.png';
-import graystar from '../../dist/images/graystar.png';
-import noisebar from '../../dist/images/noisebar.png';
-import thumbsup from '../../dist/images/thumbsup.png';
 
 const RatingSummary = (props) => {
+  const redstar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/redstar.png';
+  const graystar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/graystar.png';
+  const noisebar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/noisebar.png';
+  const thumbsup = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/thumbsup.png';
+
   const { reviews, origReviews, handleChartClick } = props;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
   const thumb = <span className="reviews-icon"><img src={thumbsup} alt="thumb icon" height="16" width="auto" /></span>;
