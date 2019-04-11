@@ -20,6 +20,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
+    console.log(window.location)
     const rId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
     this.setState({
       restaurantId: rId,

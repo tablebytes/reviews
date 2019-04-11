@@ -75,9 +75,8 @@
   width: calc(16px * 5 + 0.25rem * 5);
   flex-shrink: 0;
   padding-top: 0.5rem;
-  padding-bottom: .8rem;
+  padding-bottom: .5rem;
   position: relative;
-  display: flex;
   align-items: center;
   justify-content: flex-start;
   font-size: 0.875rem;

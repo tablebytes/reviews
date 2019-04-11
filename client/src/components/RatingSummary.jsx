@@ -1,15 +1,14 @@
 import React from 'react';
 import '../styles/summaryStyle.css';
 import ScoreChart from './ScoreChart.jsx';
-import redstar from '../images/redstar.png';
-import graystar from '../images/graystar.png';
-import noisebar from '../images/noisebar.png';
-import thumbsup from '../images/thumbsup.png';
 
 const RatingSummary = (props) => {
+  const redstar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/redstar.png';
+  const graystar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/graystar.png';
+  const noisebar = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/noisebar.png';
+  const thumbsup = 'https://s3-us-west-1.amazonaws.com/open-tabs-reviews/images/thumbsup.png';
+
   const { reviews, origReviews, handleChartClick } = props;
-  const red = <span className="reviews-review-stars"><img src={redstar} alt="red star" height="16" width="16" /></span>;
-  const gray = <span className="reviews-review-stars"><img src={graystar} alt="gray star" height="16" width="auto" /></span>;
   const noise = <span className="reviews-icon"><img src={noisebar} alt="noise icon" height="16" width="auto" /></span>;
   const thumb = <span className="reviews-icon"><img src={thumbsup} alt="thumb icon" height="16" width="auto" /></span>;
   const reviewCount = origReviews.length;
