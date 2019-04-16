@@ -5,9 +5,9 @@ const Promise = require('promise');
 const login = require("./mySQLlogin.js");
 // Create database with mysql
 const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: '',
+  host: 'localhost',
+  user: `${login.login.username}`,
+  password: `${login.login.password}`,
 });
 
 connection.connect((err) => {
