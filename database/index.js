@@ -2,7 +2,7 @@
 const mysql = require('mysql');
 const Sequelize = require('sequelize');
 const Promise = require('promise');
-
+const login = require("./mySQLlogin.js");
 // Create database with mysql
 const connection = mysql.createConnection({
   host: '127.0.0.1',
