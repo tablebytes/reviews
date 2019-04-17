@@ -4,10 +4,12 @@ const controllers = require("./controller.js");
 
 //User Routes
 // router.get('/user', controllers)
-
+router.get('/users/:user_id', controllers.user.read);
+  //url should be /user?username=XYZ&location=ABC
+router.post('/users', controllers.user.create);
 
 //Restaurant /Review Routes
-router.get('/restaurants/:restaurant_id/reviews', controllers.restaurant.getAll)
-router.get('/restaurants/:restaurant_id/review/:id', controllers.restaurant.getOne)
+router.get('/restaurants/:restaurant_id/reviews', controllers.restaurant.readAll);
+router.get('/restaurants/:restaurant_id/review/:id', controllers.restaurant.readOne);
 
 module.exports = router;
