@@ -20,9 +20,9 @@ module.exports = {
       })
       .catch(err => console.log(err));
     },
-    create : (req, res) => {
+    newRestaurant : (req, res) => {
       const restaurant = {
-        restaurant_name : req.query.name,
+        restaurant_name : req.body.name,
       }
       Models.Restaurant.create(restaurant)
         .then(()=>{
@@ -30,7 +30,28 @@ module.exports = {
           res.sendStatus(200)
         })
         .catch(err => console.log(err));
-    }
+    },
+    newReview : (req, res) => {
+      const review = {
+        restaurant_id : req.params.restaurant_id,
+        user_id : req.body.user_id,
+        overall_score : req.body.review.overall_score,
+        food_score : req.body.review.food_score,
+        service_score : req.body.review.service_score,
+        ambience_score : req.body.review.ambience_score,
+        value_score : req.body.review.value_score,
+        date_dined : req.body.date_dined,
+        review : req.body.review.review,
+        user_recommended : req.body.review.user_recommended,
+
+      }
+      Models.Review.create(review)
+        .then(()=>{
+          res.send("Review Created")
+          res.sendStatus(200)
+        })
+        .catch(err => console.log(err));
+    },
   },
   user : {
     //Gets all reviews from 1 user and adds user information on end
@@ -50,9 +71,9 @@ module.exports = {
     },
     create : (req, res) => {
       const user = {
-        username : req.query.username,
+        username : req.body.username,
         review_count : 0,
-        location : req.query.location,
+        location : req.body.location,
         VIP: 0
       }
       Models.User.create(user)
