@@ -7,7 +7,7 @@ const controllers = require("./controller.js");
 
 
 //Restaurant /Review Routes
-router.get('/restaurants/:restaurant_id/reviews', controllers.restaurant.get)
-
+router.get('/restaurants/:restaurant_id/reviews', controllers.restaurant.getAll)
+router.get('/restaurants/:restaurant_id/review/:id', controllers.restaurant.getOne)
 
 module.exports = router;
