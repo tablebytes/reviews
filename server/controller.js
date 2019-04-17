@@ -88,7 +88,7 @@ module.exports = {
         .then(() => {
           Models.Restaurant.destroy({ where: { id: restaurant_id}})
             .then(()=>{
-              res.send("Review deleted");
+              res.send("Restaurant deleted");
               res.sendStatus(200);
             })
             .catch(err => console.log(err));
@@ -133,6 +133,19 @@ module.exports = {
         .then(() => {
           res.send("User Updated");
           res.sendStatus(200);
+        })
+        .catch(err => console.log(err));
+    },
+    delete : (req, res) =>{
+      const { user_id} = req.params;
+      Models.Review.destroy({ where: { user_id: user_id}})
+        .then(() => {
+          Models.User.destroy({ where: { id: user_id}})
+            .then(()=>{
+              res.send("User deleted");
+              res.sendStatus(200);
+            })
+            .catch(err => console.log(err));
         })
         .catch(err => console.log(err));
     }
