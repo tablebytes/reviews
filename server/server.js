@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
-const Models = require('../database/Models');
+const router = require("./router");
 
 const db = require('../database/index');
 
@@ -21,15 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(morgan('tiny'));
 
-app.get('/api/restaurants/:restaurant_id/reviews', (req, res) => {
-  const { restaurant_id } = req.params;
-  Models.Review.findAll({ where: { restaurant_id: restaurant_id }, include: [Models.User] })
-    .then((data) => {
-      res.send(data);
-      res.sendStatus(200);
-    })
-    .catch(err => console.log(err));
-});
+app.use('/api/', router);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
