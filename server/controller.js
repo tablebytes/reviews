@@ -82,6 +82,16 @@ module.exports = {
           res.sendStatus(200)
         })
         .catch(err => console.log(err));
+    },
+    update : (req, res)=>{
+      const {user_id} = req.params;
+      Models.User.update(
+        {username : req.body.username} ,{where: { id : user_id }})
+        .then(() => {
+          res.send("User Updated");
+          res.sendStatus(200);
+        })
+        .catch(err => console.log(err));
     }
   }
 }
