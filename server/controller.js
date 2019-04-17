@@ -52,6 +52,16 @@ module.exports = {
         })
         .catch(err => console.log(err));
     },
+    updateName : (req, res) => {
+      const { restaurant_id } = req.params;
+      Models.Restaurant.update( {restaurant_name : req.body.restaurant_name},
+        { where: { id: restaurant_id }})
+        .then(() => {
+          res.send("Restaurant Name updated");
+          res.sendStatus(200);
+        })
+        .catch(err => console.log(err));
+    },
   },
   user : {
     //Gets all reviews from 1 user and adds user information on end

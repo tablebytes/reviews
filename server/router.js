@@ -15,4 +15,6 @@ router.get('/restaurants/:restaurant_id/review/:id', controllers.restaurant.read
 router.post('/restaurants', controllers.restaurant.newRestaurant)
 router.post('/restaurants/:restaurant_id/reviews', controllers.restaurant.newReview)
 
+router.put('/restaurants/:restaurant_id', controllers.restaurant.updateName )
+
 module.exports = router;
