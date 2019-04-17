@@ -48,14 +48,29 @@ module.exports = app;
   -create new user
     -app.post(/api/user/?user=name)
   -create new review
-    -app.post(/api/restaurants/:id/reviews/?review=review)
+    -app.post(/api/restaurants/:restaurant_id/reviews/?review=review)
 
    Read
    -all reviews from 1 restaurant
-    -app.get('/api/restaurants/:id/reviews)
+    -app.get('/api/restaurants/:restaurant_id/reviews)
   -all reviews from 1 user
-    -app.get('/api/user/:id)
+    -app.get('/api/user/:user_id)
   -one review 
-    -app.get(/api/restaurants/:restaurant_id/reviews/::id)
+    -app.get(/api/restaurants/:restaurant_id/reviews/:id)
 
+  Update
+  -1 review
+    -app.put(/api/restaurants/:restaurant_id/reviews/:id/?review=review)
+  -User name
+    -app.put(/api/user/:user_id/?username=name)
+  -Restaurant name
+    -app.put(/api/restaurants/:restaurant_id/?restaurant_name=restaurant_name)
+  
+  Delete
+  -1 review 
+    -app.delete(/api/restaurants/:restaurant_id/reviews/:id/)
+  -Restaurant
+    -app.delete(/api/restaurants/:restaurant_id)
+  -User
+    -app.delete(/api/user/:user_id)
 */
