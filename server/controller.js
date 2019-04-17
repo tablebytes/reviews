@@ -25,8 +25,8 @@ module.exports = {
         restaurant_name : req.body.name,
       }
       Models.Restaurant.create(restaurant)
-        .then(()=>{
-          res.send("Restaurant Created")
+        .then((result)=>{
+          res.send(JSON.stringify(result.id));
           res.sendStatus(200)
         })
         .catch(err => console.log(err));
@@ -46,8 +46,8 @@ module.exports = {
 
       }
       Models.Review.create(review)
-        .then(()=>{
-          res.send("Review Created")
+        .then((result)=>{
+          res.send(JSON.stringify(result.id));
           res.sendStatus(200)
         })
         .catch(err => console.log(err));
@@ -62,6 +62,39 @@ module.exports = {
         })
         .catch(err => console.log(err));
     },
+    updateReview : (req, res) => {
+      const { restaurant_id, id } = req.params;
+      const change = req.body;
+      Models.Review.update( change ,
+        { where: { restaurant_id: restaurant_id, id : id }})
+        .then(() => {
+          res.send("Review updated");
+          res.sendStatus(200);
+        })
+        .catch(err => console.log(err));
+    },
+    deleteReview : (req, res) =>{
+      const { restaurant_id, id } = req.params;
+      Models.Review.destroy({ where: { restaurant_id: restaurant_id, id : id }})
+        .then(() => {
+          res.send("Review deleted");
+          res.sendStatus(200);
+        })
+        .catch(err => console.log(err));
+    },
+    deleteRestaurant : (req, res) => {
+      const { restaurant_id} = req.params;
+      Models.Review.destroy({ where: { restaurant_id: restaurant_id}})
+        .then(() => {
+          Models.Restaurant.destroy({ where: { id: restaurant_id}})
+            .then(()=>{
+              res.send("Review deleted");
+              res.sendStatus(200);
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
+    }
   },
   user : {
     //Gets all reviews from 1 user and adds user information on end
@@ -87,8 +120,8 @@ module.exports = {
         VIP: 0
       }
       Models.User.create(user)
-        .then(()=>{
-          res.send("User Created")
+        .then((result)=>{
+          res.send(JSON.stringify(result.id));
           res.sendStatus(200)
         })
         .catch(err => console.log(err));
