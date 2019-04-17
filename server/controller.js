@@ -19,6 +19,17 @@ module.exports = {
         res.sendStatus(200);
       })
       .catch(err => console.log(err));
+    },
+    create : (req, res) => {
+      const restaurant = {
+        restaurant_name : req.query.name,
+      }
+      Models.Restaurant.create(restaurant)
+        .then(()=>{
+          res.send("Restaurant Created")
+          res.sendStatus(200)
+        })
+        .catch(err => console.log(err));
     }
   },
   user : {

@@ -12,4 +12,6 @@ router.post('/users', controllers.user.create);
 router.get('/restaurants/:restaurant_id/reviews', controllers.restaurant.readAll);
 router.get('/restaurants/:restaurant_id/review/:id', controllers.restaurant.readOne);
 
+router.post('/restaurants', controllers.restaurant.create)
+
 module.exports = router;
