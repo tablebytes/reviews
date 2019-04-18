@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../database/index');
 
-const Restaurant = db.sql.define('Restaurant', {
+const Restaurant = db.postgres.define('Restaurant', {
   restaurant_name: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -10,7 +10,7 @@ const Restaurant = db.sql.define('Restaurant', {
   timestamps: false,
 });
 
-const User = db.sql.define('User', {
+const User = db.postgres.define('User', {
   username: {
     type: Sequelize.STRING,
   },
@@ -27,7 +27,7 @@ const User = db.sql.define('User', {
   timestamps: false,
 });
 
-const Review = db.sql.define('Review', {
+const Review = db.postgres.define('Review', {
   restaurant_id: {
     type: Sequelize.INTEGER,
   },
@@ -71,7 +71,7 @@ Review.belongsTo(User, { foreignKey: 'user_id' });
 Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
 Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
 
-db.sql.sync();
+db.postgres.sync();
 
 module.exports = {
   Restaurant,

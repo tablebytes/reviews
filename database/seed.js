@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+// const mysql = require('mysql');
 const faker = require('faker');
 // const Reviews = require('./Reviews');
 const database = require('./index.js');
@@ -131,11 +131,11 @@ const seedReviewsHigher = function seedReviewsHigher() {
   }
 };
 
-database.sql.sync({ force: true }).then(function() {
+database.postgres.sync({ force: true }).then(function() {
   seedRestaurants();
   seedUsernames();
   seedReviews();
   seedReviewsHigher();
+  // database.postgres.close();
 });
 
-database.connection.end();

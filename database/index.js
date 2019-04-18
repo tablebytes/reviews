@@ -1,31 +1,42 @@
-const mysql = require('mysql');
+// const mysql = require('mysql');
+const pg= require("pg")
 const Sequelize = require('sequelize');
 const Promise = require('promise');
+const pginfo = require("../pguserData");
 // Create database with mysql
+// const connection = pg.createConnection({
+//   host: '127.0.0.1',
+//   user: pginfo.user,
+//   password:pginfo.password,
+// });
 
-const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: `root`,
-  password: ``,
-});
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the MySQL server.');
-});
+// connection.connect((err) => {
+//   if (err) throw err;
+//   console.log('Connected to the Postgres server.');
+// });
 
 // Connect to the database by creating a Sequelize instance
-let sql = new Sequelize('', 'root', '', {
-  dialect: 'mysql',
+// let postgres = new Sequelize('', 'postgres', pginfo.password, {
+//   host: 'localhost',
+//   dialect: 'postgres'
+// });
+
+// postgres.query('CREATE DATABASE IF NOT EXISTS`opentable_reviews`;').then(() => {});
+
+ let postgres = new Sequelize(pginfo.database, pginfo.user, pginfo.password, {
+  dialect: 'postgres'
 });
 
-sql.query('CREATE DATABASE IF NOT EXISTS`opentable_reviews`;').then(() => {});
 
-sql = new Sequelize('opentable_reviews', 'root', '', {
-  dialect: 'mysql',
-});
-
-const User = sql.define('User', {
+postgres
+  .authenticate()
+  .then(()=>{
+    console.log("Connect with Postgres made")
+  })
+  .catch ((err)=>{
+    console.log("Unable to connect to Postgres", err)
+  })
+const User = postgres.define('User', {
   username: {
     type: Sequelize.STRING,
   },
@@ -40,6 +51,6 @@ const User = sql.define('User', {
   },
 });
 
-module.exports.connection = connection;
-module.exports.sql = sql;
+// module.exports.connection = connection;
+module.exports.postgres = postgres;
 module.exports.User = User;
