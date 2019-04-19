@@ -3,6 +3,7 @@ const faker = require('faker');
 const Promise = require("bluebird");
 const fs = require("fs");
 const zlib = require("zlib");
+const readline = require("linebyline");
 Promise.promisifyAll(fs);
 // const Reviews = require('./Reviews');
 const database = require('./index.js');
@@ -18,10 +19,10 @@ const seedRestaurants = function seedRestaurants() {
 };
 
 const createUsernames = async function createUsernames() {
-  var seedCount= 10;
+  var seedCount= 5000;
   for (let i = 0; i <= seedCount; i += 1) {
     var rows=[];
-    for(var q=0; q< 10; q++){
+    for(var q=0; q< 250; q++){
       const username = faker.name.firstName();
       const review_count = faker.random.number({
         min: 10,
@@ -33,7 +34,7 @@ const createUsernames = async function createUsernames() {
     }
     await new Promise( (res, rej) => {
       
-      zlib.gzip(JSON.stringify(rows), (err, gzip)=>{
+      zlib.gzip(JSON.stringify(rows)+'\n', (err, gzip)=>{
         if(err){
           console.log(err);
         } else {
@@ -51,19 +52,32 @@ const createUsernames = async function createUsernames() {
 };
 
 const seedUsers = function seedUsers(){ 
-  fs.readFile("./sampleData.gz", (err, body)=>{
-    if(err){
-      throw err;
-    } else{
-      zlib.gunzip(body, (err, data)=>{
-        if(err){
-          throw err;
-        } else {
-          console.log(data.length);
-          console.log("hELLO")
-        }
-      })
+  var readStream= fs.createReadStream("./sampleData.gz");
+  var gunzip=zlib.createGunzip();
+  var lineRaw='';
+  var lines=[];
+  readStream.pipe(gunzip).on("data",(chuck)=>{
+    lineRaw=lineRaw+chuck.toString();
+    // lines=lines.concat(chuck.toString().split("\n"));
+    // console.log(lines[lines.length-1]);
+    // line=lines[lines.length]
+  })
+  .on('drain', ()=>{
+    lines= lineRaw.split("\n");
+    lineRaw=lines[lines.length-1];
+    lines.pop();
+    async function bulkLoad() {
+      for(const line in lines){
+        await Models.User.bulkCreate(JSON.parse(lines[line]))
+        .then(() => {
+          console.log("Saved")
+        });
+      }
     }
+    bulkLoad();
+  })
+  .on("end",()=>{
+    console.log("End");
   })
 }
 
@@ -185,7 +199,6 @@ database.postgres.sync().then(function() {
     seedUsers();
   };
   loop();
-  
   // seedReviews();
   // seedReviewsHigher();
   // database.postgres.close();
