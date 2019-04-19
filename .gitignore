@@ -26,3 +26,6 @@ dist/
 
 mySQLlogin.js
 pguserData.js
+
+sampleData
+sampleData.gz

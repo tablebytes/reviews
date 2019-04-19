@@ -1,5 +1,9 @@
 // const mysql = require('mysql');
 const faker = require('faker');
+const Promise = require("bluebird");
+const fs = require("fs");
+const zlib = require("zlib");
+Promise.promisifyAll(fs);
 // const Reviews = require('./Reviews');
 const database = require('./index.js');
 const Models = require('./Models');
@@ -13,23 +17,58 @@ const seedRestaurants = function seedRestaurants() {
   }
 };
 
-const seedUsernames = function seedUsernames() {
-  for (let i = 0; i < 400; i += 1) {
-    const username = faker.name.firstName();
-    const review_count = faker.random.number({
-      min: 10,
-      max: 40,
-    });
-    const location = 'San Francisco';
-    // const location = faker.address.city().concat(', ', faker.address.stateAbbr());
-    const vip = faker.random.boolean();
-    Models.User.create({
-      username, review_count, location, VIP: vip,
-    })
-      .then(() => {
+const createUsernames = async function createUsernames() {
+  var seedCount= 10;
+  for (let i = 0; i <= seedCount; i += 1) {
+    var rows=[];
+    for(var q=0; q< 10; q++){
+      const username = faker.name.firstName();
+      const review_count = faker.random.number({
+        min: 10,
+        max: 40,
       });
+      const location = 'San Francisco';
+      const vip = faker.random.boolean();
+      rows.push({username, review_count, location, VIP: vip})
+    }
+    await new Promise( (res, rej) => {
+      
+      zlib.gzip(JSON.stringify(rows), (err, gzip)=>{
+        if(err){
+          console.log(err);
+        } else {
+            fs.appendFile("./sampleData.gz",gzip, (err, data)=>{
+              if(err){
+                console.log(err)
+              } else {
+                res(data);
+              }
+            })
+        }
+      })
+    })
   }
 };
+
+const seedUsers = function seedUsers(){ 
+  fs.readFile("./sampleData.gz", (err, body)=>{
+    if(err){
+      throw err;
+    } else{
+      zlib.gunzip(body, (err, data)=>{
+        if(err){
+          throw err;
+        } else {
+          console.log(data.length);
+          console.log("hELLO")
+        }
+      })
+    }
+  })
+}
+
+
+
 
 const seedReviews = function seedReviews() {
   for (let i = 0; i < 300; i += 1) {
@@ -130,12 +169,25 @@ const seedReviewsHigher = function seedReviewsHigher() {
       });
   }
 };
+Promise.promisify(createUsernames);
+database.postgres.sync().then(function() {
+  // seedRestaurants();
+  async function loop() {
+    fs.writeFile("./sampleData.gz","")
+    count=[0,1,2,3,4,5,6,7,8,9]
 
-database.postgres.sync({ force: true }).then(function() {
-  seedRestaurants();
-  seedUsernames();
-  seedReviews();
-  seedReviewsHigher();
+    console.log("Hello");
+    for(const item of count){
+      await createUsernames();
+      console.log(item);
+    }
+    console.log('Goodbye');
+    seedUsers();
+  };
+  loop();
+  
+  // seedReviews();
+  // seedReviewsHigher();
   // database.postgres.close();
 });
 
