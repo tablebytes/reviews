@@ -11,10 +11,10 @@ const Models = require('./Models');
 
 
 
-const createUsernames = async function createUsernames(gzipFilePath, seedCount, rowCount) {
-  for (let i = 0; i <= seedCount; i += 1) {
+const createUsernames = async function createUsernames(seedCount, rowCount, database) {
+  for (let i = 0; i < seedCount; i += 1) {
     var rows=[];
-    for(var q=0; q< rowCount; q++){
+    for(var q=0; q < rowCount; q++){
       const username = faker.name.firstName();
       const review_count = faker.random.number({
         min: 10,
@@ -25,84 +25,38 @@ const createUsernames = async function createUsernames(gzipFilePath, seedCount, 
       rows.push({username, review_count, location, VIP: vip})
     }
     await new Promise( (res, rej) => {
-      
-      zlib.gzip(JSON.stringify(rows)+'\n', (err, gzip)=>{
-        if(err){
-          console.log(err);
-        } else {
-            fs.appendFile(gzipFilePath,gzip, (err, data)=>{
-              if(err){
-                console.log(err)
-              } else {
-                res(data);
-              }
-            })
-        }
-      })
+      async function endbulkLoad() {
+        await database.bulkCreate(rows)
+        .then(() => {
+          res();
+        });
+      }
+      endbulkLoad();
     })
   }
 };
-const createRestaurants = async function createRestaurants(gzipFilePath, seedCount, rowCount) {
+const createRestaurants = async function createRestaurants(seedCount, rowCount, database) {
   for(var i =0; i < seedCount ; i++){
     var rows=[];
     for(var q=0; q< rowCount ; q++){
       const restaurant_name = faker.lorem.word();
       rows.push({restaurant_name});
     }
-    await new Promise ((res,rej)=>{
-      zlib.gzip(JSON.stringify(rows)+'\n', (err, gzip)=>{
-        if(err){
-          console.log(err);
-        } else {
-            fs.appendFile(gzipFilePath,gzip, (err, data)=>{
-              if(err){
-                console.log(err)
-              } else {
-                res(data);
-              }
-            })
-        }
-      })
+    await new Promise( (res, rej) => {
+      async function endbulkLoad() {
+        await database.bulkCreate(rows)
+        .then(() => {
+          console.log("Saved");
+          res();
+        });
+      }
+      endbulkLoad();
     })
   }
 };
-// const seedUsers = function seedUsers(){ 
-//   var readStream= fs.createReadStream("./sampleData.gz");
-//   var gunzip=zlib.createGunzip();
-//   var lineRaw='';
-//   var lines=[];
-//   readStream.pipe(gunzip).on("data",(chuck)=>{
-//     lineRaw=lineRaw+chuck.toString();
-//     // lines=lines.concat(chuck.toString().split("\n"));
-//     // console.log(lines[lines.length-1]);
-//     // line=lines[lines.length]
-//   })
-//   .on('drain', ()=>{
-//     lines= lineRaw.split("\n");
-//     lineRaw=lines[lines.length-1];
-//     lines.pop();
-//     async function bulkLoad() {
-//       for(const line in lines){
-//         await Models.User.bulkCreate(JSON.parse(lines[line]))
-//         .then(() => {
-//           console.log("Saved")
-//         });
-//       }
-//     }
-//     bulkLoad();
-//   })
-//   .on("end",()=>{
-//     console.log("End");
-//   })
-// }
-
-
-
-
-const createReviews = async function createReviews(gzipFilePath, seedCount, rowCount) {
+const createReviews = async function createReviews(seedCount, rowCount, database, max) {
   for(let q= 0; q< seedCount; q++){
     console.log(q)
-    max=0.8*seedCount*rowCount;
     var rows=[];
     for (let i = 0; i < rowCount; i += 1) {
       const restaurant_id = faker.random.number({
@@ -138,74 +92,23 @@ const createReviews = async function createReviews(gzipFilePath, seedCount, rowC
       const user_recommended = faker.random.boolean();
       rows.push({restaurant_id,user_id,overall_score,food_score,service_score,ambience_score,value_score,date_dined,review,user_recommended});
     }
-    await new Promise( (res,rej)=>{
-      zlib.gzip(JSON.stringify(rows)+'\n', (err, gzip)=>{
-        if(err){
-          console.log(err);
-        } else {
-            fs.appendFile(gzipFilePath,gzip, (err, data)=>{
-              if(err){
-                console.log(err)
-              } else {
-                res(data);
-              }
-            })
-        }
-      })
+    await new Promise( (res, rej) => {
+      async function endbulkLoad() {
+        await database.bulkCreate(rows)
+        .then(() => {
+          console.log("Saved");
+          res();
+        });
+      }
+      endbulkLoad();
     })
   }
 };
 
-const seed = function seed(file,database){ 
-  var readStream= fs.createReadStream(file);
-  var gunzip=zlib.createGunzip();
-  var lineRaw='';
-  var lines=[];
-  readStream.pipe(gunzip).on("data",(chuck)=>{
-    lineRaw=lineRaw+chuck.toString();
-    // lines=lines.concat(chuck.toString().split("\n"));
-    // console.log(lines[lines.length-1]);
-    // line=lines[lines.length]
-  })
-  .on('drain', ()=>{
-    lines= lineRaw.split("\n");
-    lineRaw=lines[lines.length-1];
-    lines.pop();
-    async function bulkLoad() {
-      for(const line in lines){
-        if(lines[line]){
-          await database.bulkCreate(JSON.parse(lines[line]))
-          .then(() => {
-            console.log("Saved")
-          });
-        }
-        
-      }
-    }
-    bulkLoad();
-  })
-  .on("end",()=>{
-    lines= lineRaw.split("\n");
-    async function endbulkLoad() {
-      for(const line in lines){
-        if(lines[line]){
-          await database.bulkCreate(JSON.parse(lines[line]))
-          .then(() => {
-            console.log("EndSaved")
-          });
-        }
-        
-      }
-    }
-    endbulkLoad();
-    console.log("End");
-  })
-}
-
 Promise.promisify(createUsernames);
 database.postgres.sync({force: true}).then(async function() {
-  var seedCount =500;
-  var rowCount=2000;
+  var seedCount =1000;
+  var rowCount=1000;
   async function userLoop() {
     var gzipFilePath="./userData.gz";
     var database= Models.User;
@@ -214,10 +117,9 @@ database.postgres.sync({force: true}).then(async function() {
 
     console.log("Hello");
     for(const item of count){
-      await createUsernames(gzipFilePath, seedCount, rowCount);
+      await createUsernames(seedCount, rowCount, database);
       console.log(item);
     }
-    seed(gzipFilePath,database);
   };
   await userLoop();
   async function restaurantLoop() {
@@ -228,25 +130,24 @@ database.postgres.sync({force: true}).then(async function() {
 
     console.log("Starting Restaurant Seed");
     for(const item of count){
-      await createRestaurants(gzipFilePath, seedCount, rowCount);
+      await createRestaurants(seedCount, rowCount, database);
       console.log(item);
     }
-    seed(gzipFilePath,database);
   };
   await restaurantLoop();
   async function reviewLoop() {
+    max=seedCount*rowCount;
     // seedCount=seedCount*10;
     var gzipFilePath="./reviewData.gz";
     var database= Models.Review;
+    
     fs.writeFile(gzipFilePath,"")
     count=[0,1,2,3,4,5,6,7,8,9]
-
     console.log("Starting Review Seed");
     for(const item of count){
-      await createReviews(gzipFilePath, seedCount, rowCount);
+      await createReviews(seedCount, rowCount, database, max);
       console.log(item);
     }
-    seed(gzipFilePath,database);
   };
   await reviewLoop();
 
