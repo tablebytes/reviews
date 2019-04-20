@@ -25,8 +25,7 @@ const pginfo = require("../pguserData");
 
  let postgres = new Sequelize(pginfo.database, pginfo.user, pginfo.password, {
   dialect: 'postgres',
-  logging : false,
-  query : {raw : true}
+  logging : false
 });
 
 

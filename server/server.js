@@ -7,7 +7,7 @@ const router = require("./router");
 
 const db = require('../database/index');
 
-db.sql.authenticate()
+db.postgres.authenticate()
   .then(() => console.log('Database connected'))
   .catch(err => console.log('Database connection error: ' + err));
 

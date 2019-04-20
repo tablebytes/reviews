@@ -71,7 +71,7 @@ Review.belongsTo(User, { foreignKey: 'user_id' });
 Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
 Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
 
-db.postgres.sync();
+// db.postgres.sync();
 
 module.exports = {
   Restaurant,

@@ -7,7 +7,6 @@ module.exports = {
       Models.Review.findAll({ where: { restaurant_id: restaurant_id }, include: [Models.User] })
         .then((data) => {
           res.send(data);
-          res.sendStatus(200);
         })
         .catch(err => console.log(err));
     },
