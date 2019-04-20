@@ -204,8 +204,8 @@ const seed = function seed(file,database){
 
 Promise.promisify(createUsernames);
 database.postgres.sync({force: true}).then(async function() {
-  var seedCount =100;
-  var rowCount=100;
+  var seedCount =500;
+  var rowCount=2000;
   async function userLoop() {
     var gzipFilePath="./userData.gz";
     var database= Models.User;
