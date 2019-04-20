@@ -102,15 +102,16 @@ const createRestaurants = async function createRestaurants(gzipFilePath, seedCou
 const createReviews = async function createReviews(gzipFilePath, seedCount, rowCount) {
   for(let q= 0; q< seedCount; q++){
     console.log(q)
+    max=0.8*seedCount*rowCount;
     var rows=[];
     for (let i = 0; i < rowCount; i += 1) {
       const restaurant_id = faker.random.number({
         min: 1,
-        max: 100,
+        max: max,
       });
       const user_id = faker.random.number({
         min: 1,
-        max: 100,
+        max: max,
       });
       const overall_score = faker.random.number({
         min: 1,
@@ -172,23 +173,39 @@ const seed = function seed(file,database){
     lines.pop();
     async function bulkLoad() {
       for(const line in lines){
-        await database.bulkCreate(JSON.parse(lines[line]))
-        .then(() => {
-          console.log("Saved")
-        });
+        if(lines[line]){
+          await database.bulkCreate(JSON.parse(lines[line]))
+          .then(() => {
+            console.log("Saved")
+          });
+        }
+        
       }
     }
     bulkLoad();
   })
   .on("end",()=>{
+    lines= lineRaw.split("\n");
+    async function endbulkLoad() {
+      for(const line in lines){
+        if(lines[line]){
+          await database.bulkCreate(JSON.parse(lines[line]))
+          .then(() => {
+            console.log("EndSaved")
+          });
+        }
+        
+      }
+    }
+    endbulkLoad();
     console.log("End");
   })
 }
 
 Promise.promisify(createUsernames);
 database.postgres.sync({force: true}).then(async function() {
-  var seedCount =1000;
-  var rowCount=1000;
+  var seedCount =100;
+  var rowCount=100;
   async function userLoop() {
     var gzipFilePath="./userData.gz";
     var database= Models.User;
@@ -234,4 +251,3 @@ database.postgres.sync({force: true}).then(async function() {
   await reviewLoop();
 
 });
-

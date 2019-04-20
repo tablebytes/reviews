@@ -24,7 +24,9 @@ const pginfo = require("../pguserData");
 // postgres.query('CREATE DATABASE IF NOT EXISTS`opentable_reviews`;').then(() => {});
 
  let postgres = new Sequelize(pginfo.database, pginfo.user, pginfo.password, {
-  dialect: 'postgres'
+  dialect: 'postgres',
+  logging : false,
+  query : {raw : true}
 });
 
 
