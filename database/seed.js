@@ -46,7 +46,6 @@ const createRestaurants = async function createRestaurants(seedCount, rowCount, 
       async function endbulkLoad() {
         await database.bulkCreate(rows)
         .then(() => {
-          console.log("Saved");
           res();
         });
       }
@@ -56,7 +55,6 @@ const createRestaurants = async function createRestaurants(seedCount, rowCount, 
 };
 const createReviews = async function createReviews(seedCount, rowCount, database, max) {
   for(let q= 0; q< seedCount; q++){
-    console.log(q)
     var rows=[];
     for (let i = 0; i < rowCount; i += 1) {
       const restaurant_id = faker.random.number({
@@ -96,7 +94,6 @@ const createReviews = async function createReviews(seedCount, rowCount, database
       async function endbulkLoad() {
         await database.bulkCreate(rows)
         .then(() => {
-          console.log("Saved");
           res();
         });
       }
@@ -107,8 +104,8 @@ const createReviews = async function createReviews(seedCount, rowCount, database
 
 Promise.promisify(createUsernames);
 database.postgres.sync({force: true}).then(async function() {
-  var seedCount =1000;
-  var rowCount=1000;
+  var seedCount =100;
+  var rowCount=10000;
   async function userLoop() {
     var gzipFilePath="./userData.gz";
     var database= Models.User;
@@ -137,7 +134,7 @@ database.postgres.sync({force: true}).then(async function() {
   await restaurantLoop();
   async function reviewLoop() {
     max=seedCount*rowCount;
-    // seedCount=seedCount*10;
+    seedCount=seedCount*5;
     var gzipFilePath="./reviewData.gz";
     var database= Models.Review;
     
