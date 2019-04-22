@@ -7,9 +7,6 @@ const router = require('./router');
 
 const db = require('../database/index');
 
-db.sql.authenticate()
-  .then(() => console.log('Database connected'))
-  .catch(err => console.log(`Database connection error: ${err}`));
 
 const port = 3001;
 const app = express();

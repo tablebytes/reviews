@@ -1,89 +1,133 @@
-const Sequelize = require('sequelize');
-const db = require('../database/index');
-
-const Restaurant = db.sql.define('Restaurant', {
-  restaurant_name: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-}, {
-  timestamps: false,
-});
-
-const User = db.sql.define('User', {
-  username: {
-    type: Sequelize.STRING,
-  },
-  review_count: {
-    type: Sequelize.INTEGER,
-  },
-  location: {
-    type: Sequelize.STRING,
-  },
-  VIP: {
-    type: Sequelize.BOOLEAN,
-  },
-}, {
-  timestamps: false,
-});
-
-const Review = db.sql.define('Review', {
-  restaurant_id: {
-    type: Sequelize.INTEGER,
-  },
-  user_id: {
-    type: Sequelize.INTEGER,
-  },
-  overall_score: {
-    type: Sequelize.INTEGER,
-  },
-  food_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  service_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  ambience_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  value_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  date_dined: {
-    type: Sequelize.DATE,
-  },
-  review: {
-    type: Sequelize.STRING(1234),
-  },
-  user_recommended: {
-    type: Sequelize.BOOLEAN,
-  },
-}, {
-  timestamps: false,
-});
-
-User.hasMany(Review, { foreignKey: 'user_id' });
-Review.belongsTo(User, { foreignKey: 'user_id' });
-Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
-Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
-
-db.sql.sync();
+// const db = require('../database/index');
 
 module.exports = {
-  Restaurant,
-  User,
-  Review,
-};
-
+  fields : {
+    review_id : {
+      type : 'uuid',
+      default: {'$db_function' : "unixTimestampOf()"},
+      required : true
+    },
+    restaurant_id : {
+      type : 'int',
+      required : true
+    },
+    restaurant_name : {
+      type : "varchar",
+      required : true
+    },
+    overall_score : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value > 0 && value <=5;},
+      
+    },
+    food_score : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value > 0 && value <=5;}
+    },
+    service_score : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value > 0 && value <=5;}
+    },
+    ambience_score : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value > 0 && value <=5;}
+    },
+    value_score : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value > 0 && value <=5;}
+    },
+    date_dined : {
+      type : 'date',
+      required : true
+    },
+    review : {
+      type : 'text',
+      required : true
+    },
+    user_recommended : {
+      type : 'boolean',
+      required : true
+    },
+    user_id : {
+      type : 'int',
+      required : true
+    },
+    user_name : {
+      type : 'varchar',
+      required : true
+    },
+    review_count : {
+      type : 'int',
+      required : true,
+      validator : function(value) { value >= 10 && value <=40;}
+    },
+    location : {
+      type : 'varchar',
+      required : true
+    },
+    VIP : {
+      type : 'boolean',
+      required : true
+    }
+  },
+  key: [["review_id"],"restaurant_id"],
+  clustering_order : {"restaurant_id" : "desc"},
+  //Insert Materialized view later
+  indexes: ["user_id","restaurant_id"],
+  table_name : "foodbytesReviews"
+}
 
 /** *****************************
  * Cassandra Data
  *
- * Idea 1:
+ * Idea 1: Flat Schema: By Review
+ * 
+ * -Review_id
+ *   -Partition key
+ *  -uniq number
+ * -Restaurant_ID
+ *    -Custering key
+ *    -uniq number
+ * Restaurant_Name:
+ *    -varchar
+ *  -Overall_score
+*       -1-5
+*  -Food_Score
+*       -1-5
+*   -Service_Score
+*       -1-5
+*   -ambience_score
+*       -1-5
+*  -value_Score
+*        -1-5
+*  -date_dined
+*        -Date
+*  -review
+*      -String
+*   -User_recommended
+*        -Bolean
+ * -user_id 
+ *      -uniq number
+ *      -Possible custor id
+ * -user_name :
+ *    -varchar
+ * -ReviewCount:
+ *    -number
+ * -Location
+ *    -SF
+ * -VIP
+ *  -Bollean
+ * 
+ * 
+ * 
+ * 
+ * 
+ * Idea 2: List Schema
  * Restaurant_ID
  * -primary key
  * Restaurant_Name:

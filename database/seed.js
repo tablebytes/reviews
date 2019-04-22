@@ -15,10 +15,11 @@ const faker = require('faker');
 
 const seedUsernames = function seedUsernames() {
   const users = [];
-  for (let i = 0; i < 1000000; i += 1) {
+  for (let i = 0; i < 10000; i += 1) {
+    const user_id = i + round*
     const username = faker.name.firstName();
     const review_count = faker.random.number({
-      min: 10,
+      min: 10, 
       max: 40,
     });
     const location = 'San Francisco';
