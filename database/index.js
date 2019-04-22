@@ -6,8 +6,8 @@ const Promise = require('promise');
 
 const connection = mysql.createConnection({
   host: '127.0.0.1',
-  user: `root`,
-  password: ``,
+  user: 'root',
+  password: '',
 });
 
 connection.connect((err) => {

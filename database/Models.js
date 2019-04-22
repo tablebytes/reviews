@@ -80,61 +80,48 @@ module.exports = {
 };
 
 
-
-/*******************************
+/** *****************************
  * Cassandra Data
- * 
+ *
  * Idea 1:
  * Restaurant_ID
  * -primary key
  * Restaurant_Name:
- * 
+ *
  * set<Reviews>
  * -a set of all reviews associated with that restaurant
  *    -Review
  *        -Review_id
  *            -RestaurantID_ReviewCount
- *        -Overall_score 
+ *        -Overall_score
  *            -1-5
  *        -Food_Score
  *            -1-5
  *        -Service_Score
  *            -1-5
- * 
- * 
- * 
- *  user_id: {
-    type: Sequelize.INTEGER,
-  },
-  overall_score: {
-    type: Sequelize.INTEGER,
-  },
-  food_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  service_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  ambience_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  value_score: {
-    type: Sequelize.INTEGER,
-    isIn: [[1, 2, 3, 4, 5]],
-  },
-  date_dined: {
-    type: Sequelize.DATE,
-  },
-  review: {
-    type: Sequelize.STRING(1234),
-  },
-  user_recommended: {
-    type: Sequelize.BOOLEAN,
- * 
- * 
- * 
- * 
+ *        -ambience_score
+ *            -1-5
+ *        -value_Score
+ *            -1-5
+ *        -date_dined
+ *            -Date
+ *         -review
+ *            -String
+ *         -User_recommended
+ *            -Bolean
+ *        -User
+ *            -User_id
+ *                -Number: Uniq
+ *            -UserName
+ *                -String
+ *            -ReviewCount
+ *                -Number
+ *            -Location
+ *                -SF
+ *            -Vip
+ *                -Bolean
+ *
+ *
+ *
+ *
  */

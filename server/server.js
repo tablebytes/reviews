@@ -3,13 +3,13 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
-const router = require("./router");
+const router = require('./router');
 
 const db = require('../database/index');
 
 db.sql.authenticate()
   .then(() => console.log('Database connected'))
-  .catch(err => console.log('Database connection error: ' + err));
+  .catch(err => console.log(`Database connection error: ${err}`));
 
 const port = 3001;
 const app = express();
@@ -18,7 +18,7 @@ app.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded( {extended : true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 
 
@@ -48,7 +48,7 @@ module.exports = app;
     -app.get('/api/restaurants/:restaurant_id/reviews)
   -all reviews from 1 user
     -app.get('/api/user/:user_id)
-  -one review 
+  -one review
     -app.get(/api/restaurants/:restaurant_id/reviews/:id)
 
   Update
@@ -58,9 +58,9 @@ module.exports = app;
     -app.put(/api/user/:user_id/?username=name)
   -Restaurant name
     -app.put(/api/restaurants/:restaurant_id/?restaurant_name=restaurant_name)
-  
+
   Delete
-  -1 review 
+  -1 review
     -app.delete(/api/restaurants/:restaurant_id/reviews/:id/)
   -Restaurant
     -app.delete(/api/restaurants/:restaurant_id)
