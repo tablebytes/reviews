@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Open Table FEC</title>
+  </head>
+  <body>
+    <img src="https://s3-us-west-1.amazonaws.com/opentabs-sidebar/pics/TopBanner.png" class="main-image">
+    <div id="proxy-container" class="proxy-container">
+      <div id="proxy-overview" class="proxy-overview"></div>
+      <div id="proxy-sidebar" class="proxy-sidebar"></div>
+      <div id="proxy-photos" class="proxy-photos"></div>
+      <div id="proxy-reviews" class="proxy-reviews"></div>
+      <div id="proxy-menu" class="proxy-menu"></div>
+    </div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script type="text/javascript" src="bundle.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/opentabs-sidebar/bundle.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/opentabs-menu/bundle.js"></script>
+    <script src="https://s3-us-west-1.amazonaws.com/photowheelopentabs/bundle/bundle.js"></script>
+
+    <script>
+      ReactDOM.render(
+        React.createElement(Reviews),
+        document.getElementById('proxy-reviews')
+      );
+      ReactDOM.render(
+        React.createElement(Photos),
+        document.getElementById('proxy-photos')
+      );
+      ReactDOM.render(
+        React.createElement(Menu),
+        document.getElementById('proxy-menu')
+      );
+      ReactDOM.render(
+        React.createElement(Sidebar),
+        document.getElementById('proxy-sidebar')
+      );
+      ReactDOM.render(
+        React.createElement(Overview),
+        document.getElementById('proxy-overview')
+      );
+    </script>
+  </body>
+</html>
