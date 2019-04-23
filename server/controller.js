@@ -1,36 +1,43 @@
-const Models = require('../database/Models');
+const Promise = require("bluebird");
+const db = require('../database/index');
+Promise.promisifyAll(db);
+
 
 module.exports = {
   restaurant: {
     readAll: (req, res) => {
-      const { restaurant_id } = req.params;
-      Models.Review.findAll({ where: { restaurant_id }, include: [Models.User] })
-        .then((data) => {
-          res.send(data);
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const restaurant_id  = JSON.parse(req.params.restaurant_id);
+      db.reviewModel.find({ restaurant_id : restaurant_id }, (err, reviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          res.send(reviews);
+        }
+      })
     },
     readOne: (req, res) => {
-      const { restaurant_id, id } = req.params;
-      Models.Review.findOne({ where: { restaurant_id, id }, include: [Models.User] })
-        .then((data) => {
-          res.send(data);
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const restaurant_id  = JSON.parse(req.params.restaurant_id);
+      const review_id  = JSON.parse(req.params.review_id);
+      db.reviewModel.find({ restaurant_id: restaurant_id, review_id :review_id }, (err, reviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          res.send(reviews);
+        }
+      })
     },
-    newRestaurant: (req, res) => {
-      const restaurant = {
-        restaurant_name: req.body.name,
-      };
-      Models.Restaurant.create(restaurant)
-        .then((result) => {
-          res.send(JSON.stringify(result.id));
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
-    },
+    // //Possible?
+    // newRestaurant: (req, res) => {
+    //   const restaurant = {
+    //     restaurant_name: req.body.name,
+    //   };
+    //   Models.Restaurant.create(restaurant)
+    //     .then((result) => {
+    //       res.send(JSON.stringify(result.id));
+    //       res.sendStatus(200);
+    //     })
+    //     .catch(err => console.log(err));
+    // },
     newReview: (req, res) => {
       const review = {
         restaurant_id: req.params.restaurant_id,
@@ -52,6 +59,7 @@ module.exports = {
         })
         .catch(err => console.log(err));
     },
+    //Possible?
     updateName: (req, res) => {
       const { restaurant_id } = req.params;
       Models.Restaurant.update({ restaurant_name: req.body.restaurant_name },
@@ -99,56 +107,64 @@ module.exports = {
   user: {
     // Gets all reviews from 1 user and adds user information on end
     read: (req, res) => {
-      const { user_id } = req.params;
-      Models.Review.findAll({ where: { user_id } })
-        .then((data) => {
-          Models.User.findOne({ where: { id: user_id } })
-            .then((userData) => {
-              data.push(userData);
-              res.send(data);
-              res.sendStatus(200);
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
-    },
-    create: (req, res) => {
-      const user = {
-        username: req.body.username,
-        review_count: 0,
-        location: req.body.location,
-        VIP: 0,
-      };
-      Models.User.create(user)
-        .then((result) => {
-          res.send(JSON.stringify(result.id));
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const user_id = JSON.parse(req.params.user_id);
+      db.reviewModel.find({ user_id : user_id }, (err, userReviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          res.send(userReviews);
+        }
+      })
     },
     update: (req, res) => {
-      const { user_id } = req.params;
-      Models.User.update(
-        { username: req.body.username }, { where: { id: user_id } },
-      )
-        .then(() => {
-          res.send('User Updated');
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const user_id = JSON.parse(req.params.user_id);
+      db.reviewModel.find({ user_id : user_id }, (err, userReviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          async function updateAll(){
+            for(var i = 0; i < userReviews.length;i++){
+              await db.reviewModel.update(
+                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, { user_name : req.body.username }, (err, updated)=>{
+                  if(err){
+                    console.log(err);
+                    res.send(err);
+                  } else {
+                    return;
+                  }
+                }
+              )
+            }
+            res.send("Updated")
+          }
+         updateAll();
+        }
+      }) 
     },
     delete: (req, res) => {
-      const { user_id } = req.params;
-      Models.Review.destroy({ where: { user_id } })
-        .then(() => {
-          Models.User.destroy({ where: { id: user_id } })
-            .then(() => {
-              res.send('User deleted');
-              res.sendStatus(200);
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
+      const user_id = JSON.parse(req.params.user_id);
+      db.reviewModel.find({ user_id : user_id }, (err, userReviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          async function deleteAll(){
+            for(var i = 0; i < userReviews.length;i++){
+              await db.reviewModel.delete(
+                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, { user_name : req.body.username }, (err, updated)=>{
+                  if(err){
+                    console.log(err);
+                    res.send(err);
+                  } else {
+                    return;
+                  }
+                }
+              )
+            }
+            res.send("User's Revews Deleted");
+          }
+         deleteAll();
+        }
+      }) 
     },
   },
 };

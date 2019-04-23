@@ -78,12 +78,13 @@ const seedReviews = async function seedReviews(restaCount, rowCount, millions) {
     for(var q = 1 ; q <= rowCount; q++){
       //review count
       var reviewCount=Math.floor(Math.random()*6)+1;
+      var restaurant_name =faker.lorem.word();
       for(var i=0;i<reviewCount;i++){
         var user = users[Math.floor(Math.random() * users.length)];
         review = {
-          // review_id : JSON.stringify(expressCassandra.timeuuid()),
+          review_id : expressCassandra.timeuuid(),
           restaurant_id  : `${restaurant_id}`,
-          restaurant_name : faker.lorem.word(),
+          restaurant_name : restaurant_name,
           overall_score : faker.random.number({
             min: 1,
             max: 5,
