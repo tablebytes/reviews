@@ -159,5 +159,3 @@ db.reviewModel.syncDB( (err,schemaChange)=>{
 })
 
 
-
-// database.connection.end();
