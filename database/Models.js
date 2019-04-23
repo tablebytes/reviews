@@ -5,7 +5,7 @@ module.exports = {
   fields : {
     review_id : {
       type : 'uuid',
-      default: {'$db_function' : "uuid()"},
+      default: {'$db_function' : "expressCassandra.timeuuid()"},
       required : true
     },
     restaurant_id : {
