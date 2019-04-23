@@ -1,8 +1,7 @@
-// const mysql = require('mysql');
 const faker = require('faker');
-// const Reviews = require('./Reviews');
-// const database = require('./index.js');
-// const Models = require('./Models');
+const moment = require("moment");
+const Promise = require("bluebird");
+const db = require('./index.js');
 
 // const seedRestaurants = function seedRestaurants() {
 //   for (let i = 0; i < 100; i += 1) {
@@ -13,10 +12,11 @@ const faker = require('faker');
 //   }
 // };
 
-const seedUsernames = function seedUsernames() {
+const seedUsernames = function seedUsernames(millions) {
   const users = [];
-  for (let i = 0; i < 10000; i += 1) {
-    const user_id = i + round*
+  //makes a batch of 10000 millions users
+  for (let i = 0; i < 1000000; i += 1) {
+    const user_id = i + millions;
     const username = faker.name.firstName();
     const review_count = faker.random.number({
       min: 10, 
@@ -31,50 +31,83 @@ const seedUsernames = function seedUsernames() {
     //   .then(() => {
     //   });
     users.push({
-      username, review_count, location, VIP: vip,
+      user_id: user_id,
+      username: username,
+      review_count: review_count,
+      location: location,
+      vip: vip
     });
   }
   return users;
-  console.timeEnd('seedUsernames');
 };
 
-const seedReviews = function seedReviews() {
-  const users = seedUsernames();
-  for (let i = 0; i < 300; i += 1) {
-    const restaurant_id = faker.random.number({
-      min: 1,
-      max: 100,
-    });
-    const user_id = faker.random.number({
-      min: 1,
-      max: 100,
-    });
-    const overall_score = faker.random.number({
-      min: 1,
-      max: 5,
-    });
-    const food_score = faker.random.number({
-      min: 1,
-      max: 5,
-    });
-    const service_score = faker.random.number({
-      min: 1,
-      max: 5,
-    });
-    const ambience_score = faker.random.number({
-      min: 1,
-      max: 5,
-    });
-    const value_score = faker.random.number({
-      min: 1,
-      max: 5,
-    });
-
-    const date_dined = faker.date.between('2015-01-01', '2019-03-31');
-    const review = faker.lorem.sentence();
-    const user_recommended = faker.random.boolean();
-    const userIndex = Math.floor(Math.random() * users.length);
-    const user = users[userIndex];
+const seedReviews = async function seedReviews(restaCount, rowCount, millions, callback) {
+  var max = restaCount * rowCount;
+  const users = seedUsernames(millions);
+  var restaurant_id = millions;
+  //Every 1 million new batch of users
+  for(var res=0 ; res <= restaCount; res++){
+    var queryBatch=[];
+    //size of each row pushed into databbase with bulk laod
+    for(var q = 1 ; q <= rowCount; q++){
+      //review count
+      console.log(restaurant_id);
+      var reviewCount=Math.floor(Math.random()*6)+1;
+      for(var i=0;i<reviewCount;i++){
+        var user = users[Math.floor(Math.random() * users.length)];
+        review = {
+          restaurant_id  : restaurant_id,
+          restaurant_name : faker.lorem.word(),
+          overall_score : faker.random.number({
+            min: 1,
+            max: 5,
+          }),
+          food_score : faker.random.number({
+            min: 1,
+            max: 5,
+          }),
+          service_score : faker.random.number({
+            min: 1,
+            max: 5,
+          }),
+          ambience_score : faker.random.number({
+            min: 1,
+            max: 5,
+          }),
+          value_score : faker.random.number({
+            min: 1,
+            max: 5,
+          }),
+          date_dined : moment().format("YYYY-MM-DD"),
+          review : faker.lorem.sentence(),
+          user_recommended : faker.random.boolean(),
+          user_id : user.user_id,
+          user_name : user.username,
+          user_review_count : user.review_count,
+          user_location : user.location,
+          user_vip : user.vip
+        }
+        let reviewRecord = new db.model.instance.review(review);
+        let reviewInsert = reviewRecord.save({return_query : true});
+        queryBatch.push(reviewInsert);
+      }
+      restaurant_id++;
+      await new Promise((res,rej)=>{
+        async function loadCass (){
+          await db.model.doBatch(queryBatch,(err, success)=>{
+            if(err){
+              throw err;
+            } else {
+              console.log("Saved")
+              res();
+            }
+          })
+        }
+        loadCass();
+      })
+    }
+  }
+    
   //   Models.Review.create({
   //     restaurant_id,
   //     user_id,
@@ -89,13 +122,37 @@ const seedReviews = function seedReviews() {
   //   })
   //     .then(() => {
   //     });
-  }
 };
-console.time('seedUsernames');
-// database.sql.sync({ force: true }).then(function() {
-//   // seedRestaurants();
-//   seedUsernames();
-//   // seedReviews();
-// });
+db.reviewModel.syncDB( (err,schemaChange)=>{
+  if(err){
+    throw(err);
+  } else {
+    console.log("Schema created = ", schemaChange)
+    const seedCassandra = async function(){
+      const restaCount=1000;
+      const rowCount=1000;
+      async function seedLoop(){
+        //Millions of entries
+        count=[0,1,2,3,4,5,6,7,8,9];
+        for(const milCounter of count){
+          const millions=milCounter*1000000
+          await seedReviews(restaCount, rowCount, millions);
+          console.log("Mil Count",milCounter);
+          if(milCounter === 9){
+            db.model.close((err)=>{
+              if(err){
+                throw err;
+              }
+            })
+          }
+        }
+      }
+      seedLoop();
+    }
+    seedCassandra();
+  }
+})
+
+
 
 // database.connection.end();

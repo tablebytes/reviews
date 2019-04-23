@@ -1,10 +1,11 @@
+const expressCassandra = require("express-cassandra");
 // const db = require('../database/index');
 
 module.exports = {
   fields : {
     review_id : {
       type : 'uuid',
-      default: {'$db_function' : "unixTimestampOf()"},
+      default: {'$db_function' : "uuid()"},
       required : true
     },
     restaurant_id : {
@@ -42,7 +43,7 @@ module.exports = {
       validator : function(value) { value > 0 && value <=5;}
     },
     date_dined : {
-      type : 'date',
+      type : 'varchar',
       required : true
     },
     review : {
@@ -61,25 +62,25 @@ module.exports = {
       type : 'varchar',
       required : true
     },
-    review_count : {
+    user_review_count : {
       type : 'int',
       required : true,
       validator : function(value) { value >= 10 && value <=40;}
     },
-    location : {
+    user_location : {
       type : 'varchar',
       required : true
     },
-    VIP : {
+    user_vip : {
       type : 'boolean',
       required : true
     }
   },
-  key: [["review_id"],"restaurant_id"],
-  clustering_order : {"restaurant_id" : "desc"},
+  key: [["restaurant_id"],"user_id"],
+  clustering_order : {"user_id" : "desc"},
   //Insert Materialized view later
-  indexes: ["user_id","restaurant_id"],
-  table_name : "foodbytesReviews"
+  indexes: ["user_id","review_id"],
+  table_name : "foodbytesreviews"
 }
 
 /** *****************************

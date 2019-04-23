@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const router = require('./router');
 
-const db = require('../database/index');
+const cassandra = require('../database/index');
 
 
 const port = 3001;
