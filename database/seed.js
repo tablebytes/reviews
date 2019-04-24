@@ -133,7 +133,7 @@ database.postgres.sync({force: true}).then(async function() {
   };
   await restaurantLoop();
   async function reviewLoop() {
-    max=seedCount*rowCount*10-1;
+    max=(seedCount*rowCount*10)-1;
     seedCount=seedCount*5;
     var gzipFilePath="./reviewData.gz";
     var database= Models.Review;
