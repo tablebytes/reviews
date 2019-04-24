@@ -3,7 +3,6 @@ const expressCassandra = require("express-cassandra");
 const db = require('../database/index');
 Promise.promisifyAll(db);
 
-
 module.exports = {
   restaurant: {
     readAll: (req, res) => {

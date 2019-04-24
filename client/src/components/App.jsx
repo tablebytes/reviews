@@ -16,11 +16,11 @@ class App extends React.Component {
       reviewsFiltered: false,
       filterScore: '',
     };
+    this.formUser=this.formUser.bind(this);
   }
 
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
-    console.log(window.location)
     const rId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
     this.setState({
       restaurantId: rId,
@@ -31,6 +31,8 @@ class App extends React.Component {
     fetch(`/api/restaurants/${this.state.restaurantId}/reviews`)
       .then(response => response.json())
       .then((data) => {
+        this.formUser(data);
+        console.log(data);
         this.setState({
           reviews: data,
           origReviews: data,
@@ -38,7 +40,16 @@ class App extends React.Component {
       })
       .catch(err => console.error('Error fetching data: ' + err));
   }
-
+  formUser(reviews) {
+    for(var i= 0 ; i< reviews.length; i++){
+      reviews[i].User={
+        user_name : reviews[i].user_name,
+        review_count : reviews[i].user_review_count,
+        location : reviews[i].user_location,
+        VIP : reviews[i].user_vip
+      }
+    }
+  }
   handleChartClick(e, clickScore) {
     e.preventDefault();
     if (this.state.reviewsFiltered) {
