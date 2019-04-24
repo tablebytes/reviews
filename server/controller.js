@@ -1,4 +1,5 @@
 const Promise = require("bluebird");
+const expressCassandra = require("express-cassandra");
 const db = require('../database/index');
 Promise.promisifyAll(db);
 
@@ -17,91 +18,133 @@ module.exports = {
     },
     readOne: (req, res) => {
       const restaurant_id  = JSON.parse(req.params.restaurant_id);
-      const review_id  = JSON.parse(req.params.review_id);
-      db.reviewModel.find({ restaurant_id: restaurant_id, review_id :review_id }, (err, reviews)=>{
+      const review_id  = expressCassandra.uuidFromString(req.params.review_id);
+      db.reviewModel.find({ restaurant_id: restaurant_id, review_id : review_id }, (err, review)=>{
         if(err){
           res.send(err);
         } else {
-          res.send(reviews);
+          res.send(review);
         }
       })
     },
-    // //Possible?
-    // newRestaurant: (req, res) => {
-    //   const restaurant = {
-    //     restaurant_name: req.body.name,
-    //   };
-    //   Models.Restaurant.create(restaurant)
-    //     .then((result) => {
-    //       res.send(JSON.stringify(result.id));
-    //       res.sendStatus(200);
-    //     })
-    //     .catch(err => console.log(err));
-    // },
     newReview: (req, res) => {
-      const review = {
-        restaurant_id: req.params.restaurant_id,
-        user_id: req.body.user_id,
-        overall_score: req.body.review.overall_score,
-        food_score: req.body.review.food_score,
-        service_score: req.body.review.service_score,
-        ambience_score: req.body.review.ambience_score,
-        value_score: req.body.review.value_score,
-        date_dined: req.body.date_dined,
-        review: req.body.review.review,
-        user_recommended: req.body.review.user_recommended,
-
-      };
-      Models.Review.create(review)
-        .then((result) => {
-          res.send(JSON.stringify(result.id));
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      var rawReview=req.body;
+      var review = new db.reviewModel({
+        review_id : expressCassandra.timeuuid(),
+        restaurant_id: JSON.parse(req.params.restaurant_id),
+        restaurant_name : rawReview.restaurant_name,
+        overall_score : rawReview.overall_score,
+        food_score : rawReview.food_score,
+        service_score : rawReview.service_score,
+        ambience_score : rawReview.ambience_score,
+        value_score: rawReview.value_score,
+        date_dined : rawReview.date_dined,
+        review : rawReview.review,
+        user_recommended: rawReview.user_recommended,
+        user_id : rawReview.user_id,
+        user_name : rawReview.user_name,
+        user_location: rawReview.user_location,
+        user_vip : rawReview.user_vip
+      });
+      review.save((err)=>{
+        if(err){
+          res.end(err);
+        } else {
+          res.end("Review Made")
+        }
+      })
     },
-    //Possible?
     updateName: (req, res) => {
-      const { restaurant_id } = req.params;
-      Models.Restaurant.update({ restaurant_name: req.body.restaurant_name },
-        { where: { id: restaurant_id } })
-        .then(() => {
-          res.send('Restaurant Name updated');
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const restaurant_id  = JSON.parse(req.params.restaurant_id);
+      const restaurant_name = req.body.restaurant_name;
+      db.reviewModel.find({ restaurant_id : restaurant_id }, (err, reviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          async function updateAll(){
+            for(var i = 0; i < reviews.length;i++){
+              await db.reviewModel.update(
+                { user_id : JSON.parse(reviews[i].user_id), restaurant_id : restaurant_id }, { restaurant_name : restaurant_name }, (err)=>{
+                  if(err){
+                    console.log(err);
+                    res.send(err);
+                  } else {
+                    return;
+                  }
+                }
+              )
+            }
+            res.send("Updated")
+          }
+         updateAll();
+        }
+      })
     },
-    updateReview: (req, res) => {
-      const { restaurant_id, id } = req.params;
-      const change = req.body;
-      Models.Review.update(change,
-        { where: { restaurant_id, id } })
-        .then(() => {
-          res.send('Review updated');
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+    updateReview: (req, res) =>{
+      var queryKeys ={
+        user_id: JSON.parse(req.body.user_id),
+        restaurant_id  : JSON.parse(req.params.restaurant_id)
+      }  
+      delete req.body.restaurant_id;
+      delete req.body.restaurant_name;
+      delete req.body.date_dined;
+      
+      delete req.body.user_id;
+      delete req.body.user_name;
+      delete req.body.user_review_count;
+      delete req.body.user_location;
+      delete req.body.user_vip;
+
+      db.reviewModel.update(queryKeys, req.body, (err)=>{
+        if(err){
+          console.log(err);
+          res.send(err);
+        } else {
+          res.end("Review Updated");
+        }
+      })
     },
     deleteReview: (req, res) => {
-      const { restaurant_id, id } = req.params;
-      Models.Review.destroy({ where: { restaurant_id, id } })
-        .then(() => {
-          res.send('Review deleted');
-          res.sendStatus(200);
-        })
-        .catch(err => console.log(err));
+      const review_id  = expressCassandra.uuidFromString(req.params.review_id);
+      const restaurant_id  = JSON.parse(req.params.restaurant_id);
+      
+      db.reviewModel.find({ restaurant_id: restaurant_id, review_id : review_id }, (err, review)=>{
+        if(err){
+          res.send(err);
+        } else {
+          db.reviewModel.delete({restaurant_id: restaurant_id, user_id : JSON.parse(review[0].user_id)}, (err)=>{
+            if(err){
+              res.end(err);
+            } else {
+              res.end("ReviewDeleted");
+            }
+          })
+        }
+      })
     },
     deleteRestaurant: (req, res) => {
-      const { restaurant_id } = req.params;
-      Models.Review.destroy({ where: { restaurant_id } })
-        .then(() => {
-          Models.Restaurant.destroy({ where: { id: restaurant_id } })
-            .then(() => {
-              res.send('Restaurant deleted');
-              res.sendStatus(200);
-            })
-            .catch(err => console.log(err));
-        })
-        .catch(err => console.log(err));
+      const restaurant_id  = JSON.parse(req.params.restaurant_id);
+      db.reviewModel.find({ restaurant_id: restaurant_id}, (err, reviews)=>{
+        if(err){
+          res.send(err);
+        } else {
+          async function deleteAll(){
+            for(var i = 0; i < reviews.length;i++){
+              await db.reviewModel.delete(
+                { user_id : JSON.parse(reviews[i].user_id), restaurant_id : restaurant_id }, (err)=>{
+                  if(err){
+                    res.send(err);
+                  } else {
+                    return;
+                  }
+                }
+              )
+            }
+            res.send("Restaurant Reviews Deleted");
+          }
+         deleteAll();
+        }
+      })
     },
   },
   user: {
@@ -125,7 +168,7 @@ module.exports = {
           async function updateAll(){
             for(var i = 0; i < userReviews.length;i++){
               await db.reviewModel.update(
-                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, { user_name : req.body.username }, (err, updated)=>{
+                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, { user_name : req.body.username }, (err)=>{
                   if(err){
                     console.log(err);
                     res.send(err);
@@ -150,7 +193,7 @@ module.exports = {
           async function deleteAll(){
             for(var i = 0; i < userReviews.length;i++){
               await db.reviewModel.delete(
-                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, { user_name : req.body.username }, (err, updated)=>{
+                { user_id : user_id, restaurant_id : JSON.parse(userReviews[i].restaurant_id) }, (err)=>{
                   if(err){
                     console.log(err);
                     res.send(err);
