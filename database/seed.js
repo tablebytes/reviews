@@ -90,6 +90,9 @@ const createReviews = async function createReviews(seedCount, rowCount, database
       const user_recommended = faker.random.boolean();
       rows.push({restaurant_id,user_id,overall_score,food_score,service_score,ambience_score,value_score,date_dined,review,user_recommended});
     }
+    if(rows[0].restaurant_id > 1000000){
+      console.log("True");
+    }
     await new Promise( (res, rej) => {
       async function endbulkLoad() {
         await database.bulkCreate(rows)
@@ -107,9 +110,7 @@ database.postgres.sync({force: true}).then(async function() {
   var seedCount =100;
   var rowCount=10000;
   async function userLoop() {
-    var gzipFilePath="./userData.gz";
     var database= Models.User;
-    fs.writeFile(gzipFilePath,"")
     count=[0,1,2,3,4,5,6,7,8,9]
 
     console.log("Hello");
@@ -120,9 +121,7 @@ database.postgres.sync({force: true}).then(async function() {
   };
   await userLoop();
   async function restaurantLoop() {
-    var gzipFilePath="./restaurantData.gz";
     var database= Models.Restaurant;
-    fs.writeFile(gzipFilePath,"")
     count=[0,1,2,3,4,5,6,7,8,9]
 
     console.log("Starting Restaurant Seed");
@@ -133,12 +132,10 @@ database.postgres.sync({force: true}).then(async function() {
   };
   await restaurantLoop();
   async function reviewLoop() {
-    max=(seedCount*rowCount*10)-1;
+    max=(seedCount*rowCount*10)-1;//make index of restaurant_id
     seedCount=seedCount*5;
-    var gzipFilePath="./reviewData.gz";
     var database= Models.Review;
     
-    fs.writeFile(gzipFilePath,"")
     count=[0,1,2,3,4,5,6,7,8,9]
     console.log("Starting Review Seed");
     for(const item of count){
@@ -149,3 +146,15 @@ database.postgres.sync({force: true}).then(async function() {
   await reviewLoop();
 
 });
+
+
+/*********************
+ * 
+ * POST SEED Organization 
+ * 
+ * ALTER TABLE "Reviews" ADD CONSTRAINT restaurant_key FOREIGN KEY (restaurant_id) REFERENCES "Restaurants" (id);
+ * ALTER TABLE "Reviews" ADD CONSTRAINT user_key FOREIGN KEY (user_id) REFERENCES "User" (id);
+ * CREATE INDEX idx_user ON "Reviews"(user_id);
+ * CREATE INDEX idx_rest ON "Reviews"(restaurant_id);
+ * 
+ */
