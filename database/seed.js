@@ -159,4 +159,5 @@ database.postgres.sync({force: true}).then(async function() {
  * CREATE INDEX idx_user ON "Reviews"(user_id);
  * CREATE INDEX idx_rest ON "Reviews"(restaurant_id);
  * 
+ * 
  */
