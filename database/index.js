@@ -1,7 +1,10 @@
 const pg= require("pg")
 const Sequelize = require('sequelize');
 const Promise = require('promise');
-const pginfo = require("../pguserData");
+process.env.NODE_ENV = process.env.NODE_ENV  || "development";
+if (process.env.NODE_ENV === 'development') {
+  var pginfo = require("../pguserData");
+}
 
 
  let postgres = new Sequelize("reviews", pginfo.user, pginfo.password, {
