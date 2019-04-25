@@ -27,3 +27,5 @@ client/dist/bundle.js
 mySQLlogin.js
 
 reviewData.csv
+
+pguserData.js

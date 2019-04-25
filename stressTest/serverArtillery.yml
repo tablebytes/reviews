@@ -1,0 +1,11 @@
+config:
+  target: 'http://127.0.0.1:3001'
+  phases:
+    - duration: 20
+      arrivalRate: 100
+  processor:  "./randomRestaurant.js"
+scenarios:
+  - flow:
+    - function: "randomRestaurant"
+    - get:
+        url: "/api/restaurants/{{random}}/reviews"
