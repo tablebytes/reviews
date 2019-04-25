@@ -71,10 +71,10 @@ const Review = db.postgres.define('Review', {
   // ]
 });
 
-// User.hasMany(Review, { foreignKey: 'user_id' });
-// Review.belongsTo(User, { foreignKey: 'user_id' });
-// Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
-// Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
+User.hasMany(Review, { foreignKey: 'user_id' });
+Review.belongsTo(User, { foreignKey: 'user_id' });
+Restaurant.hasMany(Review, { foreignKey: 'restaurant_id' });
+Review.belongsTo(Restaurant, { foreignKey: 'restaurant_id' });
 
 // db.postgres.sync();
 

@@ -149,11 +149,13 @@ database.postgres.sync({force: true}).then(async function() {
 
 
 /*********************
+ * Pre Seed
+ * -Turn off associations between tables in Models.js
  * 
  * POST SEED Organization 
  * 
- * ALTER TABLE "Reviews" ADD CONSTRAINT restaurant_key FOREIGN KEY (restaurant_id) REFERENCES "Restaurants" (id);
- * ALTER TABLE "Reviews" ADD CONSTRAINT user_key FOREIGN KEY (user_id) REFERENCES "User" (id);
+ * ALTER TABLE "Reviews" ADD CONSTRAINT restaurant_key FOREIGN KEY (restaurant_id) REFERENCES "Restaurants" (id) MATCH FULL;
+ * ALTER TABLE "Reviews" ADD CONSTRAINT user_key FOREIGN KEY (user_id) REFERENCES "Users" (id) MATCH FULL;
  * CREATE INDEX idx_user ON "Reviews"(user_id);
  * CREATE INDEX idx_rest ON "Reviews"(restaurant_id);
  * 

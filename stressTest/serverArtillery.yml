@@ -3,11 +3,9 @@ config:
   phases:
     - duration: 60
       arrivalRate: 20
-  defaults:
-    headers:
-      x-my-service-auth: '987401838271002188298567'
+  processor:  "./randomRestaurant.js"
 scenarios:
   - flow:
     - function: randomRestaurant
     - get:
-        url: `/restaurants/random`
+        url: "/restaurants/{{random}}"
