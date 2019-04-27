@@ -2,7 +2,7 @@ config:
   target: 'http://127.0.0.1:3001'
   phases:
     - duration: 60
-      arrivalRate: 100
+      arrivalRate: 400
   processor:  "./randomRestaurant.js"
 scenarios:
   - flow:
