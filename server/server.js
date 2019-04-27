@@ -6,10 +6,6 @@ const path = require('path');
 const router = require("./router");
 
 
-db.postgres.authenticate()
-  .then(() => console.log('Database connected'))
-  .catch(err => console.log('Database connection error: ' + err));
-
 const port = 3001;
 const app = express();
 
