@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended : true}));
 
 
-app.use('/api/', router);
+app.use('/api/reviews/', router);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
@@ -26,9 +26,7 @@ module.exports = app;
 
 
 /*
-
   CRUD API ROUTES
-
   Create
   -Create new restauturant
     -app.post(/api/restaurants/?name=name)
@@ -36,7 +34,6 @@ module.exports = app;
     -app.post(/api/user/?user=name)
   -create new review
     -app.post(/api/restaurants/:restaurant_id/reviews/?review=review)
-
    Read
    -all reviews from 1 restaurant
     -app.get('/api/restaurants/:restaurant_id/reviews)
@@ -44,7 +41,6 @@ module.exports = app;
     -app.get('/api/user/:user_id)
   -one review 
     -app.get(/api/restaurants/:restaurant_id/reviews/:id)
-
   Update
   -1 review
     -app.put(/api/restaurants/:restaurant_id/reviews/:id/?review=review)

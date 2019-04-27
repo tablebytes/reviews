@@ -1,3 +1,7 @@
+import React from "react";
+import ReactDOM from "react-dom";
 import App from './components/App.jsx';
 
-window.Reviews = App;
+
+ReactDOM.render(<App />,document.getElementById('proxy-reviews'));
+

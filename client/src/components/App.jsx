@@ -20,7 +20,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const splitUrl = window.location.pathname.split('/');
-    console.log(window.location)
     const rId = Number.parseInt(splitUrl[splitUrl.length - 1]) ||  Number.parseInt(splitUrl[splitUrl.length - 2]);
     this.setState({
       restaurantId: rId,
@@ -28,7 +27,7 @@ class App extends React.Component {
   }
 
   getReviews() {
-    fetch(`/api/restaurants/${this.state.restaurantId}/reviews`)
+    fetch(`/api/reviews/restaurants/${this.state.restaurantId}/reviews`)
       .then(response => response.json())
       .then((data) => {
         this.setState({
@@ -70,7 +69,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Route path="/api/restaurants/:id/reviews" component={ReviewList} />
+          <Route path="/api/reviews/restaurants/:id/reviews" component={ReviewList} />
           <RatingSummary
             reviews={this.state.reviews} 
             origReviews={this.state.origReviews}
