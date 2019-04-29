@@ -8,15 +8,19 @@
   },
   "scripts": {
     "build": "webpack -d --watch",
-    "start": "nodemon server/server.js",
+    "startC": "nodemon server1/cluster.js",
+    "startLB": "nodemon loadBalancer/loadBalancer.js",
+    "start1": "nodemon server1/server.js",
+    "start2": "nodemon server2/server.js",
     "test": "jest",
-    "seed": "node database/seed.js "
+    "seed": "Nonode database/seed.js "
   },
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "bluebird": "^3.5.4",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.3.1",
+    "cluster": "^0.7.7",
     "cors": "^2.8.5",
     "css-loader": "^2.1.1",
     "eslint-plugin-jest": "^22.4.1",
@@ -29,6 +33,7 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
     "newrelic": "^5.7.0",
+    "os": "^0.1.1",
     "pg": "^7.10.0",
     "pg-hstore": "^2.3.2",
     "promise": "^8.0.3",
@@ -41,6 +46,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "reactstrap": "^8.0.0",
+    "request": "^2.88.0",
     "sequelize": "^5.7.0",
     "style-loader": "^0.23.1"
   },

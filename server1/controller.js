@@ -17,6 +17,7 @@ module.exports = {
       .catch(err => console.log(err));
     },
     newRestaurant : (req, res) => {
+
       Models.Restaurant.create({restaurant_name : req.body.name})
         .then((result)=>{
           res.send(JSON.stringify(result.id));
@@ -24,6 +25,7 @@ module.exports = {
         .catch(err => console.log(err));
     },
     newReview : (req, res) => {
+      
       Models.Review.create({
         restaurant_id : req.params.restaurant_id,
         user_id : req.body.user_id,
@@ -43,8 +45,9 @@ module.exports = {
         .catch(err => console.log(err));
     },
     updateName : (req, res) => {
+      console.log(req.body)
       Models.Restaurant.update( {restaurant_name : req.body.restaurant_name},
-        { where: { id: restaurant_id }})
+        { where: { id: req.params.restaurant_id }})
         .then(() => {
           res.send("Restaurant Name updated");
         })
