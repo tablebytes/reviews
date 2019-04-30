@@ -1,19 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 const router = require("./router");
-const morgan = require('morgan');
+// const morgan = require('morgan');
 
 const port1 = process.env.PORT || 3002;
 const app1 = express();
 
-// app1.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
+app1.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
 
 app1.use(cors());
 app1.use(bodyParser.json());
 app1.use(bodyParser.urlencoded( {extended : true}));
-app1.use(morgan('tiny'));
+// app1.use(morgan('tiny'));
 
 
 app1.use('/api/reviews/', router);

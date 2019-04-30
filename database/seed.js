@@ -2,8 +2,6 @@
 const faker = require('faker');
 const Promise = require("bluebird");
 const fs = require("fs");
-const zlib = require("zlib");
-const readline = require("linebyline");
 Promise.promisifyAll(fs);
 // const Reviews = require('./Reviews');
 const database = require('./index.js');

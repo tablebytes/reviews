@@ -9,18 +9,20 @@ if (process.env.NODE_ENV === 'development') {
 
  let postgres = new Sequelize("reviews", pginfo.user, pginfo.password, {
   dialect: 'postgres',
+  host: '54.153.70.205',
+  port: 5432,
   logging : false
 });
 
 
-// postgres
-//   .authenticate()
-//   .then(()=>{
-//     console.log("Connect with Postgres made")
-//   })
-//   .catch ((err)=>{
-//     console.log("Unable to connect to Postgres", err)
-//   })
+postgres
+  .authenticate()
+  .then(()=>{
+    console.log("Connect with Postgres made")
+  })
+  .catch ((err)=>{
+    console.log("Unable to connect to Postgres", err)
+  })
 // const User = postgres.define('User', {
 //   username: {
 //     type: Sequelize.STRING,

@@ -1,7 +1,7 @@
 require("newrelic");
 const express = require('express');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const request = require('request');
 const path = require('path');
 
@@ -37,10 +37,15 @@ const switchBoard = (req, res)=>{
   rotateServer();
 }
 
-const loadBalancer = express().get('*',switchBoard).post('*', switchBoard).patch('*',switchBoard).put('*',switchBoard).delete('*',switchBoard);
+const loadBalancer = express()
+loadBalancer.get("/api/reviews/\*", switchBoard);
+loadBalancer.post("/api/reviews/\*", switchBoard);
+loadBalancer.patch("/api/reviews/\*", switchBoard);
+loadBalancer.put("/api/reviews/\*", switchBoard);
+loadBalancer.delete("/api/reviews/\*", switchBoard);
 
-loadBalancer.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist/index.html')));
 
+loadBalancer.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
 
 
 loadBalancer.listen(portLB, () => {
