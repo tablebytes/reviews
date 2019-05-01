@@ -9,7 +9,7 @@ const port1 = process.env.PORT || 3002;
 const app1 = express();
 
 app1.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
-
+app1.use('/loaderio-dbdd92a06499bda97096291f7a5e4ed1.html', express.static(path.join(__dirname, "/../loaderio-dbdd92a06499bda97096291f7a5e4ed1.html")));
 app1.use(cors());
 app1.use(bodyParser.json());
 app1.use(bodyParser.urlencoded( {extended : true}));

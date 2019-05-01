@@ -1,14 +1,13 @@
 require("newrelic");
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const request = require('request');
 const path = require('path');
 
 
 const portLB = process.env.PORT || 3001;
 
-const servers = ['http://127.0.0.1:3002', 'http://127.0.0.1:3003'];
+const servers = ['http://127.0.0.1:3002','http://54.67.74.249:3002'];
+//const servers = ['http://127.0.0.1:3002','http://54.67.74.249:3003', 'http://127.0.0.1:3003','http://54.67.74.249:3002'];
 var serIndx = 0;
 var count =0;
 const rotateServer = () =>{
@@ -46,7 +45,7 @@ loadBalancer.delete("/api/reviews/\*", switchBoard);
 
 
 loadBalancer.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
-
+loadBalancer.use('/loaderio-dbdd92a06499bda97096291f7a5e4ed1.html', express.static(path.join(__dirname, "/../loaderio-dbdd92a06499bda97096291f7a5e4ed1.html")));
 
 loadBalancer.listen(portLB, () => {
   console.log(`listening on port ${portLB}`);
