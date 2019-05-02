@@ -19,12 +19,16 @@ const writeToRedis = async function(restaurant_id){
 
 
 const warmRedis = async function(){
+  console.log("warming");
   var warmingSize=[]
-  for(var i= 0; i < 1000000 ; i++){
+  for(var i= 0; i < 150000 ; i++){
     warmingSize.push(i);
   }
   for(const item in warmingSize){
     await writeToRedis(item);
+    if(item%1000 === 0){
+      console.log(item)
+    }
   }
   console.log("DB Warmed");
 }
@@ -44,3 +48,4 @@ redisClient.on('err', (err)=>{
 
 
 module.exports=redisClient;
+module.exports.warm = warmRedis;

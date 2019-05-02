@@ -11,7 +11,8 @@
     "startC": "nodemon server1/cluster.js",
     "startLB": "nodemon loadBalancer/loadBalancer.js",
     "start1": "nodemon server1/server.js",
-    "start2": "nodemon server2/server.js"
+    "start2": "nodemon server2/server.js",
+    "warmRedis": "node database/redis/warmRedis.js"
   },
   "dependencies": {
     "bluebird": "^3.5.4",
