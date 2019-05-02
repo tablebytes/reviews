@@ -1,62 +1,59 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const router = require("./router");
-// const path = require('path');
 // const morgan = require('morgan');
 
-const port2 = process.env.PORT || 3003;
-const app2 = express();
+const port1 = process.env.PORT || 3003;
+const app1 = express();
 
-// app2.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
-
-app2.use(cors());
-app2.use(bodyParser.json());
-app2.use(bodyParser.urlencoded( {extended : true}));
-// app2.use(morgan('tiny'));
-
-
-
-app2.use('/api/reviews/', router);
+app1.use('/restaurants/:restaurant_id', express.static(path.join(__dirname, '/../client/dist')));
+app1.use('/loaderio-dbdd92a06499bda97096291f7a5e4ed1.html', express.static(path.join(__dirname, "/../loaderio-dbdd92a06499bda97096291f7a5e4ed1.html")));
+app1.use(cors());
+app1.use(bodyParser.json());
+app1.use(bodyParser.urlencoded( {extended : true}));
+// app1.use(morgan('tiny'));
 
 
+app1.use('/api/reviews/', router);
 
-app2.listen(port2, () => {
-  console.log(`listening on port ${port2}`);
+app1.listen(port1, () => {
+  console.log(`listening on port ${port1}`);
 });
 
-module.exports = app2;
+module.exports = app1;
 
 
 /*
   CRUD API ROUTES
   Create
   -Create new restauturant
-    -app2.post(/api/restaurants/?name=name)
+    -app1.post(/api/restaurants/?name=name)
   -create new user
-    -app2.post(/api/user/?user=name)
+    -app1.post(/api/user/?user=name)
   -create new review
-    -app2.post(/api/restaurants/:restaurant_id/reviews/?review=review)
+    -app1.post(/api/restaurants/:restaurant_id/reviews/?review=review)
    Read
    -all reviews from 1 restaurant
-    -app2.get('/api/restaurants/:restaurant_id/reviews)
+    -app1.get('/api/restaurants/:restaurant_id/reviews)
   -all reviews from 1 user
-    -app2.get('/api/user/:user_id)
+    -app1.get('/api/user/:user_id)
   -one review 
-    -app2.get(/api/restaurants/:restaurant_id/reviews/:id)
+    -app1.get(/api/restaurants/:restaurant_id/reviews/:id)
   Update
   -1 review
-    -app2.put(/api/restaurants/:restaurant_id/reviews/:id/?review=review)
+    -app1.put(/api/restaurants/:restaurant_id/reviews/:id/?review=review)
   -User name
-    -app2.put(/api/user/:user_id/?username=name)
+    -app1.put(/api/user/:user_id/?username=name)
   -Restaurant name
-    -app2.put(/api/restaurants/:restaurant_id/?restaurant_name=restaurant_name)
+    -app1.put(/api/restaurants/:restaurant_id/?restaurant_name=restaurant_name)
   
   Delete
   -1 review 
-    -app2.delete(/api/restaurants/:restaurant_id/reviews/:id/)
+    -app1.delete(/api/restaurants/:restaurant_id/reviews/:id/)
   -Restaurant
-    -app2.delete(/api/restaurants/:restaurant_id)
+    -app1.delete(/api/restaurants/:restaurant_id)
   -User
-    -app2.delete(/api/user/:user_id)
+    -app1.delete(/api/user/:user_id)
 */

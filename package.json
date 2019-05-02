@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "webpack -d --watch",
+    "start": "nodemon loadBalancer/loadBalancer.js & nodemon server1/server.js & nodemon server2/server.js",
     "startC": "nodemon server1/cluster.js",
     "startLB": "nodemon loadBalancer/loadBalancer.js",
     "start1": "nodemon server1/server.js",
@@ -46,6 +47,7 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "reactstrap": "^8.0.0",
+    "redis": "^2.8.0",
     "request": "^2.88.0",
     "sequelize": "^5.7.0",
     "style-loader": "^0.23.1"

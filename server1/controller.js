@@ -1,13 +1,28 @@
 const Models = require('../database/Models');
-
+const redis = require('../database/redis/redis');
 module.exports = {
   restaurant : {
     readAll : (req, res)=>{
-      Models.Review.findAll({ where: { restaurant_id: req.params.restaurant_id }, include: [Models.User] })
-        .then((data) => {
-          res.send(data);
-        })
-        .catch(err => console.log(err));
+      redis.get(req.params.restaurant_id, (err, result)=>{
+        if(err){
+          console.log('Err',err);
+          res.send(err);
+        } else if (result){
+          console.log("redis")
+          res.send(JSON.parse(result));
+        } else {
+          Models.Review.findAll({ where: { restaurant_id: req.params.restaurant_id }, include: [Models.User] })
+            .then((data) => {
+              console.log("DB")
+              if(req.params.restaurant_id < 1000000){
+                redis.set(req.params.restaurant_id, JSON.stringify(data));
+              }
+              res.send(data);
+            })
+            .catch(err => res.send(err));
+        }
+      })
+      
     },
     readOne : (req , res) => {
       Models.Review.findOne({ where: { restaurant_id: req.params.restaurant_id , id : req.params.id}, include: [Models.User] })
