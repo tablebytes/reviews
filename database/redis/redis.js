@@ -21,7 +21,7 @@ const writeToRedis = async function(restaurant_id){
 const warmRedis = async function(){
   console.log("warming");
   var warmingSize=[]
-  for(var i= 0; i < 150000 ; i++){
+  for(var i= 0; i < 15000 ; i++){
     warmingSize.push(i);
   }
   for(const item in warmingSize){
