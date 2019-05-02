@@ -6,8 +6,9 @@ const path = require('path');
 
 const portLB = process.env.PORT || 3001;
 
-const servers = ['http://127.0.0.1:3002','http://54.67.74.249:3002'];
-//const servers = ['http://127.0.0.1:3002','http://54.67.74.249:3003', 'http://127.0.0.1:3003','http://54.67.74.249:3002'];
+//const servers = ['http://127.0.0.1:3002','http://127.0.0.1:3003'];
+const servers = ['http://127.0.0.1:3002','http://52.8.207.211:3002'];
+//const servers = ['http://127.0.0.1:3002','http://52.8.207.211:3003', 'http://127.0.0.1:3003','http://52.8.207.211:3002'];
 var serIndx = 0;
 var count =0;
 const rotateServer = () =>{
@@ -26,10 +27,10 @@ const switchBoard = (req, res)=>{
         res.send(err);
       } else {
         count=count+1;
-        console.log(count);
         switchBoard(req,res, count)
       }
     } else {
+      count = 0;
       res.send(JSON.parse(body));
     }    
   })

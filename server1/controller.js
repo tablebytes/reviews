@@ -8,12 +8,12 @@ module.exports = {
           console.log('Err',err);
           res.send(err);
         } else if (result){
-          console.log("redis")
+          // console.log("redis")
           res.send(JSON.parse(result));
         } else {
           Models.Review.findAll({ where: { restaurant_id: req.params.restaurant_id }, include: [Models.User] })
             .then((data) => {
-              console.log("DB")
+              // console.log("DB")
               if(req.params.restaurant_id < 1000000){
                 redis.set(req.params.restaurant_id, JSON.stringify(data));
               }
